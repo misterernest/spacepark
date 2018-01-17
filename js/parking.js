@@ -241,17 +241,20 @@ $("#guardar").click(function(){
   }
   if(valido){
     llenaMatriz(anchoCuadro, largoCuadro);
+	guardarBaseDatos(coordenadaTemp[0][0], coordenadaTemp[0][1], $("#anchoX").val(),$("#largoY").val(), $("#date").val(),$("#date1").val(),$("#time").val(),$("#time1").val(),$("#categoria").val());
     if (coordenadaTemp.length > 1 ) {
-      $("#ancho").val('');
-      $("#largo").val('');
+      $("#anchoX").val('');
+      $("#largoY").val('');
       $("#date").val('');
       $("#date1").val('');
       $("#time").val('');
       $("#time1").val('');
+	  $("#categoria").val('');
       pintaCuadros();
       coordenadaTemp = [];
       cuentaCuadros = 0;
     }
+	
   }
 });
 
@@ -298,6 +301,37 @@ function zonasMuertas(arrayCoordenadas){
 			context.stroke();
     }
   }
+}
+
+// AJAX Guardar Formulario
+
+function guardarBaseDatos (x, y, ancho,largo, date1,date2,time1,time2, categoria){
+
+// Convertir a objeto
+var data = {};
+data.x = x;
+data.y = y;
+data.ancho = ancho;
+data.largo = largo;
+data.date1 = date1;
+data.date2 = date2;
+data.time1 = time1;
+data.time2 = time2;
+data.categoria = categoria;
+
+var url = 'guardar.php';   //este es el PHP al que se llama por AJAX
+    $.ajax({
+        method: 'POST',
+        url: url,
+        data: data,   //acá están todos los parámetros (valores a enviar) del POST
+        success: function(response){
+            // Se ejecuta al finalizar
+            //   mostrar si está OK en consola
+            console.log(response);
+			alert(response);
+        }
+    });
+
 }
 
 });
