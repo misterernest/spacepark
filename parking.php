@@ -32,22 +32,32 @@
 </head>
 <body>
   <div class="container">
-    <div class="row col-sm-12">
-      <div class="col-sm-12" style="padding: 1rem;">
-        <input class="form-control col-sm-12" type="range" name="edad" min="0" max="90" step="1" value="80">
+    <div class="row col-sm-12 col-md-12">
+      <div class="col-sm-1 row col-md-1" id="zoom">
+        <div class="col-sm-12 row col-md-12 barra-fecha" id="zoom-in">
+          <span class="glyphicon glyphicon-zoom-in zoom-text"></span>
+        </div>
+        <div class="col-sm-12 row col-md-12 barra-fecha" hidden="hidden" id="zoom-out">
+          <span  class="glyphicon glyphicon-zoom-out zoom-text"></span>
+        </div>
+      </div>
+      <div class="col-sm-11 row col-md-11 barra-fecha">
+        <input class="form-control col-sm-12" type="range" name="edad" min="0" max="120" step="1" value="80">
       </div>
     </div>
   </div>
   <div class="container">
-    <div class="container-canvas">
+    <div class="container-canvas width-70" id="container-canvas">
       <div class="div-scroll">
-          <img src="img/mapa.png" class="img-park" id="img-park">
-          <canvas class="canvas1" id="canvas1" width="2217" height="1598">
+          <img src="img/mapa.png" class="img-park" id="img-park" >
+          <canvas class="canvas1" id="canvas1">
             Su navegador no soporta canvas :(
+          </canvas>
+          <canvas class="canvas1" id="canvas2" >
           </canvas>
       </div>
     </div>
-    <div class="cont-complemento">
+    <div class="cont-complemento" id="categorias">
       <div class="categorias">
         <div class="title-cat">
           CATEGORIAS
@@ -75,13 +85,13 @@
           </div>
         </div>
       </div>
-      <?php include 'modal.html' ?>
     </div>
+
   </div>
 
 
 
-
+  <?php include 'modal.html' ?>
   <?php include "footer.html" ?>
 </body>
 </html>
