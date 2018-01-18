@@ -174,6 +174,7 @@ Responde al evento del boton guardar del modal
    if(valido){
      llenaMatriz(anchoCuadro, largoCuadro);
      if (coordenadaTemp.length > 1 ) {
+       categoria = $("#categoria").val();
        guardarBaseDatos(
          coordenadaTemp[0][0],
          coordenadaTemp[0][1],
@@ -183,7 +184,7 @@ Responde al evento del boton guardar del modal
          $("#date1").val(),
          $("#time").val(),
          $("#time1").val(),
-         $("#categoria").val()
+         categoria
        );
        $("#anchoX").val('');
        $("#largoY").val('');
@@ -192,7 +193,7 @@ Responde al evento del boton guardar del modal
        $("#time").val('');
        $("#time1").val('');
  	  $("#categoria").val('');
-       pintaCuadros();
+       pintaCuadros(categoria);
        coordenadaTemp = [];
        cuentaCuadros = 0;
      }
@@ -398,12 +399,22 @@ Funcion que pinta los cuadros
 function pintaCuadros(categoria){
   borraRecuadro(coordenadaTemp[0]);
   for (var i = 0; i < coordenadaTemp.length; i++) {
-    repinta(coordenadaTemp[i], categoria);
+    repinta(coordenadaTemp[i], colorCategoria[categoria]);
   }
 }
 
-fuction categoriaColor(categoria){
-
+/*
+Borra el recuadro ya pintado
+ */
+function borraRecuadro(coordenada){
+  if(context2){
+    context2.clearRect(
+      coordenada[0],
+      coordenada[1],
+      mts2,
+      mts2
+    );
+  }
 }
 
 /*
