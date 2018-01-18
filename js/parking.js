@@ -7,6 +7,7 @@ $(document).ready(function(){
   const zoom_width = width * zoom_proporcion;
   const zoom_height = height*zoom_proporcion;
   const color = "rgb(120, 8, 8)";
+  let guardadoExitoso = true;
   //Asigna un color a cada colorCategoria
   const colorCategoria = {
     contenedor:"rgb(255, 0, 0)",
@@ -186,16 +187,20 @@ Responde al evento del boton guardar del modal
          $("#time1").val(),
          categoria
        );
-       $("#anchoX").val('');
-       $("#largoY").val('');
-       $("#date").val('');
-       $("#date1").val('');
-       $("#time").val('');
-       $("#time1").val('');
- 	  $("#categoria").val('');
-       pintaCuadros(categoria);
-       coordenadaTemp = [];
-       cuentaCuadros = 0;
+       console.log(`respuesta guardar ${guardadoExitoso}`);
+       if (guardadoExitoso) {
+         console.log("hola ya entro");
+         $("#anchoX").val('');
+         $("#largoY").val('');
+         $("#date").val('');
+         $("#date1").val('');
+         $("#time").val('');
+         $("#time1").val('');
+         $("#categoria").val('');
+         pintaCuadros(categoria, context1);
+         coordenadaTemp = [];
+         cuentaCuadros = 0;
+       }
      }
 
    }
@@ -373,18 +378,18 @@ Crea la matriz de cuadros a dibujar
 /*
 Funcion que pinta los cuadros
  */
-   function repinta(coordenada, colorCategoria=color){
-     if(context2){
-       context2.lineWidth = 0.5;
- 			context2.strokeStyle = "#00f";
-       context2.fillStyle = colorCategoria;
-       context2.strokeRect(
+   function repinta(coordenada, context = context2, colorCategoria=color){
+     if(context){
+       context.lineWidth = 0.5;
+ 			context.strokeStyle = "#00f";
+       context.fillStyle = colorCategoria;
+       context.strokeRect(
          coordenada[0]+1,
          coordenada[1]+1,
          mts2-2,
          mts2-2
        );
-       context2.fillRect(
+       context.fillRect(
          coordenada[0]+1,
          coordenada[1]+1,
          mts2-2,
@@ -396,10 +401,10 @@ Funcion que pinta los cuadros
 
 /* Pinta el recuadro del color que se eligio la categoria */
 
-function pintaCuadros(categoria){
+function pintaCuadros(categoria, context){
   borraRecuadro(coordenadaTemp[0]);
   for (var i = 0; i < coordenadaTemp.length; i++) {
-    repinta(coordenadaTemp[i], colorCategoria[categoria]);
+    repinta(coordenadaTemp[i], context,colorCategoria[categoria]);
   }
 }
 
@@ -447,7 +452,13 @@ function borraRecuadro(coordenada){
          // Se ejecuta al finalizar
          //   mostrar si está OK en consola
          console.log(response);
- 	      alert(response);
+         if(response == "1"){
+           alert("Espacio asignado correctamente");
+           guardadoExitoso =  true;
+         }else{
+           alert("No se pudo asignar espacio error al guardar base de datos");
+           guardadoExitoso =  false;
+         }
        }
      });
    }

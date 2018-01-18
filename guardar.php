@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 //error_reporting(-1);
 //ini_set('display_errors', 'On');
@@ -14,7 +14,7 @@ if (isset($_POST['x']) && !empty($_POST['x']) && isset($_POST['y']) && !empty($_
 	$time1 = $_POST['time1'];
 	$time2 = $_POST['time2'];
 	$categoria = $_POST['categoria'];
-	
+
 	// Conexion base de datos
 	require_once 'config.php';
 
@@ -23,11 +23,11 @@ if (isset($_POST['x']) && !empty($_POST['x']) && isset($_POST['y']) && !empty($_
     $prepared = $pdo->prepare($query);
     $resultado = $prepared->execute();
     $prepared = null;
-	
+
 	if ($resultado) {
-      echo "Se grabó correctamente";
+      echo 1;
     }else {
-      echo "Error al grabar";
+      echo 0;
     }
 }
 ?>
