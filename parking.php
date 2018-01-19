@@ -57,7 +57,7 @@
           </canvas>
       </div>
     </div>
-    <div class="cont-complemento" id="categorias">
+    <!-- <div class="cont-complemento" id="categorias">
       <div class="categorias">
         <div class="title-cat">
           CATEGORIAS
@@ -85,13 +85,13 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
   </div>
 
 
 
   <?php include 'modal.html' ?>
-  <?php include "footer.html" ?>
+
 </body>
 </html>
