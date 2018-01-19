@@ -8,13 +8,18 @@
   margin-right: auto;
 }
 form>div{
-  margin: 0.5rem auto;
+  margin: 0.8rem auto;
 }
 h4{
   font-weight: bold;
 }
 input{
   font-size: 1rem;
-
-  padding: 0.2rem;
+  padding: 0.6rem 1rem;
+  width: 80%;
+  border: 0px;
+  border-radius: 3px;
+}
+.boton-log{
+  margin-top: 2rem;
 }

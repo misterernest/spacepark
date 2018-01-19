@@ -3,7 +3,7 @@ $(document).ready(function(){
   const mts2 = 12;
   const width=2217;
   const height=1598;
-  const zoom_proporcion = 0.3;
+  const zoom_proporcion = 0.323;
   const zoom_width = width * zoom_proporcion;
   const zoom_height = height*zoom_proporcion;
   const color = "rgb(120, 8, 8)";

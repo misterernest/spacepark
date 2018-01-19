@@ -48,19 +48,19 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-sm-4 col-md-4 box-login">
-							<h4>LOGIN:</h4>
+							<h4>LOGIN</h4>
 							<form action="login.php" method="post">
 								<div class="<?php echo ($_GET['error']== 1)?"alert alert-danger":"invisible"; ?>">
 									<?php echo ($_GET['error']== 1)?"USUARIO O CLAVE INCORRECTO":""; ?>
 								</div>
 								<div>
-									<input type="text" name="usuario" placeholder="USER">
+									<input type="text" name="usuario" placeholder="Username">
 								</div>
 								<div>
-									<input type="password" name="password" placeholder="PASSWORD">
+									<input type="password" name="password" placeholder="Password">
 								</div>
-								<div>
-									<input type="submit" value="SUBMIT" class="submit">
+								<div class="boton-log">
+									<input type="submit" value="log in" class="btn-success">
 								</div>
 							</form>
 						</div>
