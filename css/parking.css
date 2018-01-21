@@ -14,9 +14,40 @@ body{
   padding: 1rem;
 }
 
-.zoom-text{
-  margin: 1rem auto;
-  font-size: 3rem;
+.btn-park{
+  width:50px;
+  height:50px;
+  background-color: rgb(255, 85, 1);
+  border-radius:100%;
+  border: none;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.35), 0 3px 6px rgba(0,0,0,0.23);
+  outline:none;
+  margin-right:26px;
+  z-index: 3;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /*
+  transform:scale(0);
+  */
+}
+.btn-lupa{
+  top:10px;
+  right:10px;
+}
+.btn-gant{
+  right:70px;
+  top:10px;
+}
+
+.btn-session{
+  right:130px;
+  top: 10px;
+}
+
+.btn-park>img{
+  width: 55%;
 }
 /* estilo de datetime picker */
 
@@ -81,7 +112,8 @@ code > p
 .container-canvas{
   height: 500px;
   margin-left: 0.5rem;
-  border: 1px solid #000;
+  box-shadow: 0 0 15px #ddd;
+  background: #fff;
   position: relative;
   overflow: hidden;
   overflow-y: scroll;

@@ -16,6 +16,26 @@ $(document).ready(function(){
     pesca:"rgb(255, 255, 0)"
   };
   let coordenadaTemp = new Array(); //array con coordenadas iniciales
+
+  /* Variables de fecha actual para hacer la consulta incial*/
+    const hoy = new Date();
+    const dd = hoy.getDate();
+    const mm = hoy.getMonth()+1; //hoy es 0!
+    const yyyy = hoy.getFullYear();
+    const hour = hoy.getHours();
+    const min = 00;
+    const seg = 00;
+    let respuestaConsulta = new Array();
+    consultarBaseDatos(`${yyyy}-${mm}-${dd}`, 40);
+
+
+    // Fecha seleccionada para consultar
+    let fechaSeleccionada = hoy;
+
+  /*
+  ejemplo de consulta de base de datos
+  consultarBaseDatos ('2018-01-17', 30);
+  */
   let cuentaCuadros = 0; // cantidad de cuadros seleccionado con el mouse
   let zoom = false;
   const areaDisponible1 = Array(
@@ -54,16 +74,7 @@ $(document).ready(function(){
   var canvas2 = $("#canvas2").get(0);
   const context2 = canvas2.getContext("2d");
 
-/* Variables de fecha para hacer la consulta incial*/
-  let hoy = new Date();
-  let dd = hoy.getDate();
-  let mm = hoy.getMonth()+1; //hoy es 0!
-  let yyyy = hoy.getFullYear();
-
-
-
-
-  /* Set en el tamaño para el manejo del zoom */
+  /* Set inicial en el tamaño para el manejo del zoom */
   $('#img-park').attr("width", zoom_width);
   $('#canvas1').attr("width", zoom_width);
   $('#canvas1').attr("height", zoom_height);
@@ -72,6 +83,20 @@ $(document).ready(function(){
   $('#zoom').click(function(){
     zoomDo();
   });
+
+
+  $("#canvas1").mouseup(function(e){
+    if (!zoom) {
+      let posX1 = e.offsetX/canvas1.width;
+      let posY1 = e.offsetY/canvas1.height;
+      zoomDo();
+      let posX = 954 * posX1;
+      let posY = 1091 * posY1;
+      $("#container-canvas").scrollLeft(posX);
+      $("#container-canvas").scrollTop(posY);
+    }
+  });
+
   zonasMuertas(areaDisponible1);
   zonasMuertas(areaDisponible2);
 /*  ****************************************************************************
@@ -83,9 +108,13 @@ FUNCIONES PRINCIPALES
    */
   function zoomDo(){
     if (zoom) {
+      console.log(respuestaConsulta);
       zoom = false;
       $('#zoom-in').removeAttr("hidden");
+      $('#gant').removeAttr("hidden");
+      $('#session').removeAttr("hidden");
       $('#zoom-out').attr("hidden", "hidden");
+
       $('#categorias').removeAttr("hidden", "hidden");
       $('#container-canvas').removeClass('width-100');
       $('#container-canvas').addClass('width-70');
@@ -99,6 +128,8 @@ FUNCIONES PRINCIPALES
     }else{
       zoom = true;
       $('#zoom-out').removeAttr("hidden");
+      $('#gant').attr("hidden", "hidden");
+      $('#session').attr("hidden", "hidden");
       $('#zoom-in').attr("hidden", "hidden");
       $('#categorias').attr("hidden", "hidden");
       $('#container-canvas').removeClass('width-70');
@@ -187,9 +218,7 @@ Responde al evento del boton guardar del modal
          $("#time1").val(),
          categoria
        );
-       console.log(`respuesta guardar ${guardadoExitoso}`);
        if (guardadoExitoso) {
-         console.log("hola ya entro");
          $("#anchoX").val('');
          $("#largoY").val('');
          $("#date").val('');
@@ -222,11 +251,9 @@ FUNCIONES AUXILIARES
     function areaDisponible(coordenada){
       let puntoValido = false;
       let numEncuentro = recorreArrayAreas(areaDisponible1, coordenada);
+      numEncuentro += recorreArrayAreas(areaDisponible2, coordenada);
       if(numEncuentro % 2 != 0){
-        numEncuentro += recorreArrayAreas(areaDisponible2, coordenada);
-        if(numEncuentro % 2 != 0){
-          puntoValido = true;
-        }
+        puntoValido = true;
       }
       return puntoValido;
     }
@@ -422,6 +449,55 @@ function borraRecuadro(coordenada){
   }
 }
 
+/* Pinta la consulta acutal, segun la fecha */
+function pintaMatriz(){}
+/* Recorre el objeto de consulta */
+function recorreConsulta(arrayConsulta){
+
+  let fechaInicialArray = new Date();
+  let fechaFinalArray = new Date();
+  let respuestaConsulta = arrayConsulta;
+  for (var i = 0; i < arrayConsulta.length; i++) {
+    fechaInicialArray.setTime(Date.parse(arrayConsulta[i]["fecha_incial"]));
+    fechaFinalArray.setTime(Date.parse(arrayConsulta[i]["fecha_final"]));
+    if (fechaInicialArray.getHours() >= fechaSeleccionada.getHours()
+    && fechaFinalArray.getHours() >= fechaSeleccionada.getHours()) {
+      if (zoom) {
+        pintaArea(
+          [
+            arrayConsulta[i]["coordenada_x"],
+            arrayConsulta[i]["coordenada_y"]
+          ],
+          arrayConsulta[i]["ancho_x"],
+          arrayConsulta[i]["ancho_y"]
+        )
+      }else{
+        pintaArea(
+          [
+            arrayConsulta[i]["coordenada_x"]*zoom_proporcion,
+            arrayConsulta[i]["coordenada_y"]*zoom_proporcion
+          ],
+          arrayConsulta[i]["ancho_x"]*zoom_proporcion,
+          arrayConsulta[i]["ancho_y"]*zoom_proporcion
+        )
+      }
+    }
+  }
+}
+
+/* Pinta un area ocupada */
+function pintaArea(coordenada, sizeX, sizeY){
+
+}
+
+// devuelve si es AM O PM
+function obtieneAMPM (horaConsulta){
+  let jornada = "pm";
+  if(horaConsulta > 0 && horaConsulta > 12){
+    jornada = "am";
+  }
+  return jornada;
+}
 /*
 *********************************************************************************
   FUNCIONES CON BASE DE DATOS
@@ -451,7 +527,6 @@ function borraRecuadro(coordenada){
        success: function(response){
          // Se ejecuta al finalizar
          //   mostrar si está OK en consola
-         console.log(response);
          if(response == "1"){
            alert("Espacio asignado correctamente");
            guardadoExitoso =  true;
@@ -464,30 +539,29 @@ function borraRecuadro(coordenada){
    }
 
 /* Consulta la base de datos por meses */
-consultarBaseDatos ('2018-01-17', 30);
- function consultarBaseDatos (date,dias){
+function consultarBaseDatos (date,dias){
 
- // Convertir a objeto
- var data = {};
+// Convertir a objeto
+var data = {};
 
- data.date = date;
- data.dias = dias;
- data.categoria = '';
+data.date = date;
+data.dias = dias;
+data.categoria = '';
 
- var url = 'consultar.php';   //este es el PHP al que se llama por AJAX
+var url = 'consultar.php';   //este es el PHP al que se llama por AJAX
 
- 	resultado = new Array();
-     $.ajax({
-         method: 'POST',
-         url: url,
-         data: data,   //acá están todos los parámetros (valores a enviar) del POST
-         success: function(response){
-             // resultado es un array con el resultado del query
-             resultado = response;
- 			console.log(resultado);
-         },
- 		dataType:"json"
-     });
- }
+ resultado = new Array();
+    $.ajax({
+        method: 'POST',
+        url: url,
+        data: data,   //acá están todos los parámetros (valores a enviar) del POST
+        success: function(response){
+            // resultado es un array con el resultado del query
+            resultado = response;
+     console.log(resultado);
+        },
+   dataType:"json"
+    });
+}
 
 });

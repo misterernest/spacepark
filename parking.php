@@ -31,63 +31,40 @@
 	<script type="text/javascript" src="./js/bootstrap-material-datetimepicker.js"></script>
 </head>
 <body>
-  <div class="container">
-    <div class="row col-sm-12 col-md-12">
-      <div class="col-sm-1 row col-md-1" id="zoom">
-        <div class="col-sm-12 row col-md-12 barra-fecha" id="zoom-in">
-          <span class="glyphicon glyphicon-zoom-in zoom-text"></span>
-        </div>
-        <div class="col-sm-12 row col-md-12 barra-fecha" hidden="hidden" id="zoom-out">
-          <span  class="glyphicon glyphicon-zoom-out zoom-text"></span>
-        </div>
-      </div>
-      <div class="col-sm-11 row col-md-11 barra-fecha">
-        <input class="form-control col-sm-12" type="range" name="edad" min="0" max="120" step="1" value="80">
-      </div>
-    </div>
+  <div class="btn-park btn-lupa" id="zoom">
+    <img src="img/lupa-mas.png" alt="lupa-zoom-in" id="zoom-in">
+    <img src="img/lupa-menos.png" alt="lupa-zoom-out" id="zoom-out" hidden="hidden">
   </div>
+  <div class="btn-park btn-gant" id="gant">
+    <img src="img/diagrama-grant.png" alt="Diagrama Gant">
+  </div>
+  <a href="session_close.php">
+    <div class="btn-park btn-session" id="session">
+        <img src="img/cerrar-sesion.png" alt="Cerrar sesion">
+    </div>
+  </a>
   <div class="container">
     <div class="container-canvas width-70" id="container-canvas">
-      <div class="div-scroll">
-          <img src="img/mapa.png" class="img-park" id="img-park" >
-          <canvas class="canvas1" id="canvas1">
-            Su navegador no soporta canvas :(
-          </canvas>
-          <canvas class="canvas1" id="canvas2" >
-          </canvas>
+        <img src="img/mapa.png" class="img-park" id="img-park" >
+        <canvas class="canvas1" id="canvas1">
+          Su navegador no soporta canvas :(
+        </canvas>
+        <canvas class="canvas1" id="canvas2" >
+        </canvas>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row col-sm-12 col-md-12">
+      <div class="col-sm-10 row col-md-10 barra-fecha">
+        <input class="form-control col-sm-12 col-md-12" type="range" name="fecha_barra" min="0" max="120" step="1" value="80">
+      </div>
+      <div class="col-sm-2 row col-md-2 barra-fecha">
+        <input class="form-control col-sm-12 col-md-12" type="text" name="fecha_text" id="fecha">
       </div>
     </div>
-    <!-- <div class="cont-complemento" id="categorias">
-      <div class="categorias">
-        <div class="title-cat">
-          CATEGORIAS
-        </div>
-        <div class="cont-cat">
-          <div class="linea-cat">
-            <div class="color-cat c1" id="c1">
-            </div>
-            <span>Contenedor</span>
-          </div>
-          <div class="linea-cat">
-            <div class="color-cat c2" id="c2">
-            </div>
-            <span>Yate</span>
-          </div>
-          <div class="linea-cat">
-            <div class="color-cat c3" id="c3">
-            </div>
-            <span>Velero</span>
-          </div>
-          <div class="linea-cat">
-            <div class="color-cat c4" id="c4">
-            </div>
-            <span>Pesca</span>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
   </div>
+  <!--
+-->
 
 
 
