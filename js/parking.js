@@ -15,7 +15,10 @@ $(document).ready(function(){
     velero:"rgb(0, 0, 255)",
     pesca:"rgb(255, 255, 0)"
   };
+  // corrdenada ingresada mientras que se pinta
   let coordenadaTemp = new Array(); //array con coordenadas iniciales
+  // cooredenada que vienen de la base de datos, ya estan almacenadas
+  let respuestaConsulta = new Array();
 
   /* Variables de fecha actual para hacer la consulta incial*/
     const hoy = new Date();
@@ -25,7 +28,7 @@ $(document).ready(function(){
     const hour = hoy.getHours();
     const min = 00;
     const seg = 00;
-    let respuestaConsulta = new Array();
+
     consultarBaseDatos(`${yyyy}-${mm}-${dd}`, 40);
 
 
@@ -453,7 +456,8 @@ function borraRecuadro(coordenada){
 function pintaMatriz(){}
 /* Recorre el objeto de consulta */
 function recorreConsulta(arrayConsulta){
-
+  respuestaConsulta = arrayConsulta;
+  console.log(respuestaConsulta);
   let fechaInicialArray = new Date();
   let fechaFinalArray = new Date();
   let respuestaConsulta = arrayConsulta;
@@ -550,15 +554,12 @@ data.categoria = '';
 
 var url = 'consultar.php';   //este es el PHP al que se llama por AJAX
 
- resultado = new Array();
     $.ajax({
         method: 'POST',
         url: url,
         data: data,   //acá están todos los parámetros (valores a enviar) del POST
         success: function(response){
-            // resultado es un array con el resultado del query
-            resultado = response;
-     console.log(resultado);
+          recorreConsulta(response)
         },
    dataType:"json"
     });
