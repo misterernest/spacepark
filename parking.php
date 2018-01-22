@@ -51,22 +51,20 @@
         </canvas>
         <canvas class="canvas1" id="canvas2" >
         </canvas>
+        <canvas class="canvas1" id="canvas3" >
+        </canvas>
     </div>
   </div>
   <div class="container">
     <div class="row col-sm-12 col-md-12">
       <div class="col-sm-10 row col-md-10 barra-fecha">
-        <input class="form-control col-sm-12 col-md-12" type="range" name="fecha_barra" min="0" max="120" step="1" value="80">
+        <input id="fecha_range" class="form-control col-sm-12 col-md-12" type="range" name="fecha_barra" min="-59" max="60" step="1" value="0" hidden="hidden">
       </div>
       <div class="col-sm-2 row col-md-2 barra-fecha">
-        <input class="form-control col-sm-12 col-md-12" type="text" name="fecha_text" id="fecha">
+        <input class="form-control col-sm-12 col-md-12 form-group" type="text" name="fecha_text" id="fecha_caja">
       </div>
     </div>
   </div>
-  <!--
--->
-
-
 
   <?php include 'modal.html' ?>
 

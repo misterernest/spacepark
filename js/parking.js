@@ -28,7 +28,7 @@ $(document).ready(function(){
     const hour = hoy.getHours();
     const min = 00;
     const seg = 00;
-
+    $('#fecha_caja').val(`${dd}-${mm}-${yyyy}`)
     consultarBaseDatos(`${yyyy}-${mm}-${dd}`, 40);
 
 
@@ -72,10 +72,12 @@ $(document).ready(function(){
     [1596, 553]
   );
 /* Manejo del Canvas y su inicializacion */
-  var canvas1 = $("#canvas1").get(0);
+  let canvas1 = $("#canvas1").get(0);
   const context1 = canvas1.getContext("2d");
-  var canvas2 = $("#canvas2").get(0);
+  let canvas2 = $("#canvas2").get(0);
   const context2 = canvas2.getContext("2d");
+  let canvas3 = $("#canvas3").get(0);
+  const context3 = canvas3.getContext("2d");
 
   /* Set inicial en el tamaño para el manejo del zoom */
   $('#img-park').attr("width", zoom_width);
@@ -83,6 +85,8 @@ $(document).ready(function(){
   $('#canvas1').attr("height", zoom_height);
   $('#canvas2').attr("width", 0);
   $('#canvas2').attr("height", 0);
+  $('#canvas3').attr("width", zoom_width);
+  $('#canvas3').attr("height", zoom_height);
   $('#zoom').click(function(){
     zoomDo();
   });
@@ -102,16 +106,29 @@ $(document).ready(function(){
 
   zonasMuertas(areaDisponible1);
   zonasMuertas(areaDisponible2);
+
+
+
 /*  ****************************************************************************
 FUNCIONES PRINCIPALES
 ********************************************************************************
  */
+
+ /* Cambia el valor de la fecha seleccionada para ser consultada */
+ $('#fecha_range').change(function(){
+   let fechaActual = new Date();
+   let dias = $(this).val() * 86400;
+   fechaActual.setSeconds(dias);
+   fechaSeleccionada = fechaActual;
+   $('#fecha_caja').val(`${fechaSeleccionada.getDate()}-${fechaSeleccionada.getMonth()+1}-${fechaSeleccionada.getFullYear()}`);
+   recorreConsulta(respuestaConsulta);
+ });
   /*
   Hace el zoom en el DOM
    */
   function zoomDo(){
     if (zoom) {
-      console.log(respuestaConsulta);
+
       zoom = false;
       $('#zoom-in').removeAttr("hidden");
       $('#gant').removeAttr("hidden");
@@ -126,8 +143,11 @@ FUNCIONES PRINCIPALES
       $('#canvas1').attr("height", zoom_height);
       $('#canvas2').attr("width", 0);
       $('#canvas2').attr("height", 0);
+      $('#canvas3').attr("width", zoom_width);
+      $('#canvas3').attr("height", zoom_height);
       zonasMuertas(areaDisponible1);
       zonasMuertas(areaDisponible2);
+      recorreConsulta(respuestaConsulta);
     }else{
       zoom = true;
       $('#zoom-out').removeAttr("hidden");
@@ -142,9 +162,12 @@ FUNCIONES PRINCIPALES
       $('#canvas1').attr("height", height);
       $('#canvas2').attr("width", width);
       $('#canvas2').attr("height", height);
+      $('#canvas3').attr("width", width);
+      $('#canvas3').attr("height", height);
       creaCuadricula(canvas1.width, canvas1.height);
       zonasMuertas(areaDisponible1);
       zonasMuertas(areaDisponible2);
+      recorreConsulta(respuestaConsulta);
     }
   }
 
@@ -222,6 +245,7 @@ Responde al evento del boton guardar del modal
          categoria
        );
        if (guardadoExitoso) {
+         consultarBaseDatos(`${yyyy}-${mm}-${dd}`, 40);
          $("#anchoX").val('');
          $("#largoY").val('');
          $("#date").val('');
@@ -408,22 +432,29 @@ Crea la matriz de cuadros a dibujar
 /*
 Funcion que pinta los cuadros
  */
-   function repinta(coordenada, context = context2, colorCategoria=color){
+
+   function repinta(
+     coordenada,
+     context = context2,
+     colorCategoria=color,
+     sizeX = (mts2 - 2),
+     sizeY = (mts2 - 2),
+   ){
      if(context){
        context.lineWidth = 0.5;
- 			context.strokeStyle = "#00f";
+       context.strokeStyle = "#00f";
        context.fillStyle = colorCategoria;
        context.strokeRect(
          coordenada[0]+1,
          coordenada[1]+1,
-         mts2-2,
-         mts2-2
+         sizeX,
+         sizeY
        );
        context.fillRect(
          coordenada[0]+1,
          coordenada[1]+1,
-         mts2-2,
-         mts2-2
+         sizeX,
+         sizeY
        );
      }
    }
@@ -433,7 +464,7 @@ Funcion que pinta los cuadros
 
 function pintaCuadros(categoria, context){
   borraRecuadro(coordenadaTemp[0]);
-  for (var i = 0; i < coordenadaTemp.length; i++) {
+  for (let i = 0; i < coordenadaTemp.length; i++) {
     repinta(coordenadaTemp[i], context,colorCategoria[categoria]);
   }
 }
@@ -452,46 +483,53 @@ function borraRecuadro(coordenada){
   }
 }
 
-/* Pinta la consulta acutal, segun la fecha */
-function pintaMatriz(){}
+
 /* Recorre el objeto de consulta */
 function recorreConsulta(arrayConsulta){
+
   respuestaConsulta = arrayConsulta;
-  console.log(respuestaConsulta);
   let fechaInicialArray = new Date();
   let fechaFinalArray = new Date();
-  let respuestaConsulta = arrayConsulta;
-  for (var i = 0; i < arrayConsulta.length; i++) {
-    fechaInicialArray.setTime(Date.parse(arrayConsulta[i]["fecha_incial"]));
-    fechaFinalArray.setTime(Date.parse(arrayConsulta[i]["fecha_final"]));
-    if (fechaInicialArray.getHours() >= fechaSeleccionada.getHours()
-    && fechaFinalArray.getHours() >= fechaSeleccionada.getHours()) {
-      if (zoom) {
-        pintaArea(
-          [
-            arrayConsulta[i]["coordenada_x"],
-            arrayConsulta[i]["coordenada_y"]
-          ],
-          arrayConsulta[i]["ancho_x"],
-          arrayConsulta[i]["ancho_y"]
-        )
-      }else{
-        pintaArea(
-          [
-            arrayConsulta[i]["coordenada_x"]*zoom_proporcion,
-            arrayConsulta[i]["coordenada_y"]*zoom_proporcion
-          ],
-          arrayConsulta[i]["ancho_x"]*zoom_proporcion,
-          arrayConsulta[i]["ancho_y"]*zoom_proporcion
-        )
+  context3.clearRect(0, 0, canvas3.width, canvas3.height);
+  for (let i = 0; i < respuestaConsulta.length; i++) {
+    fechaInicialArray.setTime(Date.parse(respuestaConsulta[i]["fecha_incial"]));
+    fechaFinalArray.setTime(Date.parse(respuestaConsulta[i]["fecha_final"]));
+    if (
+      fechaInicialArray <= fechaSeleccionada
+      && fechaFinalArray >= fechaSeleccionada
+      )
+      {
+        pintaAreaOcupada(respuestaConsulta[i]);
       }
     }
   }
-}
+
 
 /* Pinta un area ocupada */
-function pintaArea(coordenada, sizeX, sizeY){
-
+function pintaAreaOcupada(objConsulta){
+  if (zoom) {
+    repinta(
+      [
+        objConsulta["coordenada_x"]*1,
+        objConsulta["coordenada_y"]*1
+      ],
+      context3,
+      colorCategoria[objConsulta["categoria"]],
+      objConsulta["ancho_x"]*mts2,
+      objConsulta["largo_y"]*mts2
+    )
+  }else{
+    repinta(
+      [
+        objConsulta["coordenada_x"] * zoom_proporcion,
+        objConsulta["coordenada_y"] * zoom_proporcion
+      ],
+      context3,
+      colorCategoria[objConsulta["categoria"]],
+      objConsulta["ancho_x"] * mts2 *zoom_proporcion,
+      objConsulta["largo_y"] * mts2 *zoom_proporcion
+    )
+  }
 }
 
 // devuelve si es AM O PM
@@ -559,6 +597,8 @@ var url = 'consultar.php';   //este es el PHP al que se llama por AJAX
         url: url,
         data: data,   //acá están todos los parámetros (valores a enviar) del POST
         success: function(response){
+          $('fecha_range').removeAttr("hidden");
+          $('echa_caja').removeAttr("hidden");
           recorreConsulta(response)
         },
    dataType:"json"
