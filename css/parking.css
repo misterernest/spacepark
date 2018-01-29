@@ -1,4 +1,4 @@
-*{
+ *{
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -17,7 +17,7 @@ body{
 .btn-park{
   width:50px;
   height:50px;
-  background-color: rgb(255, 85, 1);
+  background-color: rgb(149,198,46);
   border-radius:100%;
   border: none;
   box-shadow: 0 3px 6px rgba(0,0,0,0.35), 0 3px 6px rgba(0,0,0,0.23);
@@ -32,9 +32,47 @@ body{
   transform:scale(0);
   */
 }
-.btn-lupa{
+.btn-seleccion{
+  background-color: #ff0000;
+  width: 53px!important;
+  height: 53px!important;
+}
+.btn-park:hover{
+  background-color: rgb(255, 85, 1);
+  width: 55px;
+  height: 55px;
+}
+.btn-inactivo{
+  background-color: #b6b6b6;
+}
+.btn-inactivo:hover{
+  background-color: #b6b6b6;
+  width:50px;
+  height:50px;
+}
+.btn-eliminar1{
+  right:130px;
   top:10px;
+}
+.btn-eliminar2{
   right:10px;
+  top:10px;
+}
+.btn-mover1{
+  right:190px;
+  top:10px;
+}
+.btn-mover2{
+  right:70px;
+  top:10px;
+}
+.btn-lupa1{
+  right:250px;
+  top:10px;
+}
+.btn-lupa2{
+  right:130px;
+  top:10px;
 }
 .btn-gant{
   right:70px;
@@ -42,7 +80,7 @@ body{
 }
 
 .btn-session{
-  right:130px;
+  right:10px;
   top: 10px;
 }
 
@@ -205,6 +243,7 @@ footer>div>img{
 /* Edicion del bootstrap */
 .form-group{
   margin-bottom: 0 !important;
+  font-size: 1.3rem !important;
 }
 .caja-input{
   width: 100%;

@@ -14,7 +14,15 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <title>space parking</title>
   <script src="./js/jquery-3.2.1.min.js"></script>
-  <script type="text/javascript" src="./js/parking.js"></script>
+  <script type="text/javascript" src="./js/function_global.js"></script>
+  <script type="text/javascript" src="./js/code_global.js"></script>
+  <script type="text/javascript" src="./js/asignar_espacio.js"></script>
+  <script type="text/javascript" src="./js/range_date.js"></script>
+  <script type="text/javascript" src="./js/zoom_lupa.js"></script>
+  <script type="text/javascript" src="./js/zoom_mapa.js"></script>
+  <script type="text/javascript" src="./js/eliminar_elemento.js"></script>
+  <script type="text/javascript" src="./js/cerrar_sesion.js"></script>
+  <script type="text/javascript" src="./js/mover_elemento.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
 
 	<link rel="stylesheet" href="./css/bootstrap-material-datetimepicker.css" />
@@ -31,9 +39,15 @@
 	<script type="text/javascript" src="./js/bootstrap-material-datetimepicker.js"></script>
 </head>
 <body>
-  <div class="btn-park btn-lupa" id="zoom">
+  <div class="btn-park btn-lupa1" id="zoom">
     <img src="img/lupa-mas.png" alt="lupa-zoom-in" id="zoom-in">
     <img src="img/lupa-menos.png" alt="lupa-zoom-out" id="zoom-out" hidden="hidden">
+  </div>
+  <div class="btn-park btn-mover1" id="mover">
+    <img src="img/mover.png" alt="lupa-zoom-in" id="zoom-in">
+  </div>
+  <div class="btn-park btn-eliminar1" id="eliminar">
+    <img src="img/eliminar.png" alt="lupa-zoom-in" id="zoom-in">
   </div>
   <div class="btn-park btn-gant" id="gant">
     <img src="img/diagrama-grant.png" alt="Diagrama Gant">
@@ -49,9 +63,9 @@
         <canvas class="canvas1" id="canvas1">
           Su navegador no soporta canvas :(
         </canvas>
-        <canvas class="canvas1" id="canvas2" >
-        </canvas>
         <canvas class="canvas1" id="canvas3" >
+        </canvas>
+        <canvas class="canvas1" id="canvas2" >
         </canvas>
     </div>
   </div>
