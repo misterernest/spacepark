@@ -37,6 +37,7 @@ $(document).ready(function(){
       coordenadaTemp[0][8] = "contenedor";
       let coordenadaClick = areaDisponibleLocal(coordenadaTemp, respuestaConsultaLocal);
       coordenadaTemp = Object.assign({}, coordenadaClick);
+      //elementoSeleccionado();
       paint = true;
     }
   });
@@ -160,11 +161,25 @@ $(document).ready(function(){
       }
       return respuesta;
     }
-
-    function mueveElemento(x, y){
+    function elementoSeleccionado(){
       if (context2) {
+        console.log(coordenadaTemp);
+        context2.beginPath();
+        context2.fillStyle = colorCategoria[coordenadaTemp.categoria];
+        context2.fillRect(
+          coordenadaTemp["coordenada_x"],
+          coordenadaTemp["coordenada_y"],
+          coordenadaTemp["ancho_x"] * mts2 * zoom_proporcion,
+          coordenadaTemp["largo_y"] * mts2 * zoom_proporcion
+        );
+      }
+    }
+    function mueveElemento(){
+      if (context2) {
+        console.log(coordenadaTemp);
         context2.clearRect(0, 0, canvas2.width, canvas2.width);
-        context2.fillStyle = colorCategoria[coordenadaTemp["categoria"]];
+        context2.beginPath();
+        context2.fillStyle = colorCategoria[coordenadaTemp.categoria];
         context2.fillRect(
           coordenadaTemp["coordenada_x"],
           coordenadaTemp["coordenada_y"],
@@ -274,10 +289,10 @@ function actualizarBD (id, x, y, date){
          // resultado es un array que indica exitoso o no.
          if(response == "1"){
            alert("Espacio actualizado correctamente");
-           location.reload();
          }else{
            alert("No se pudo actualizar el espacio error al actualizar en base de datos");
          }
+         location.reload();
        },
        error: function( jqXHR, textStatus, errorThrown ) {
          alert("Error:"+textStatus);
