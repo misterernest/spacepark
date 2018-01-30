@@ -183,10 +183,10 @@ $(document).ready(function(){
     Crea la matriz de cuadros a dibujar
      */
      function llenaMatrizLocal(){
-       let OrigenX = coordenadaTemp["coordenada_x"];
-       let OrigenY = coordenadaTemp["coordenada_y"];
-       ancho = coordenadaTemp["ancho_x"];
-       largo = coordenadaTemp["largo_y"];
+       let OrigenX = coordenadaTemp[0];
+       let OrigenY = coordenadaTemp[1];
+       ancho = coordenadaTemp[2];
+       largo = coordenadaTemp[3];
        for (var i = 0; i < ancho; i++) {
          for (var j = 0; j < largo; j++) {
            if(!areaDisponible([OrigenX + (mts2 * i), OrigenY + (mts2 * j)])){
