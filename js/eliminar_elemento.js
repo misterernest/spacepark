@@ -26,10 +26,31 @@ $(document).ready(function(){
       coordenadaTemp[0][8] = "contenedor";
       let idBorrar = areaDisponible(coordenadaTemp, respuestaConsulta);
       if ( idBorrar != 0) {
-        eliminarElementoBD(idBorrar);
-        idBorrar = 0;
+        $('#myConfirm1Label').text("PREGUNTA");
+        $('#msj-confirm1').text(``);
+        $('#msj-confirm1').append(`<div class="col-lg-11 col-md-11"><br>Desea eliminar este elemento<br></div>`);
+        $('#confirm1').modal('show');
+
+        $("#aceptar").click(function(){
+          $('#confirm1').modal("hide");
+          console.log(idBorrar);
+          eliminarElementoBD(idBorrar);
+        });
+
+        $("#rechazar").click(function(){
+          $('#confirm1').modal('toggle');
+        });
+        $("#cerrar").click(function(){
+          $('#confirm1').modal('toggle');
+        });
+        $("#confirm1").on('hidden.bs.modal', function () {
+          idBorrar = 0;
+        });
       }else{
-        alert("Seleccione sobre el elemento a eliminar");
+        $('#myAlertLabel').text("ADVERTENCIA")
+        $('#msj-alert').text(``);
+        $('#msj-alert').append(`<div class="col-lg-11 col-md-11"><br>Seleccione sobre el elemento a eliminar<br></div>`)
+        $('#alert').modal('toggle');
       }
     }
   });
@@ -145,14 +166,25 @@ function eliminarElementoBD(id){
          success: function(response){
              // resultado es un array que indica exitoso o no.
              if(response == "1"){
-			   alert("Elemento eliminado correctamente");
-         location.reload();
-			 }else{
-			   alert("No se pudo eliminar elemento, error en base de datos");
-			 }
+               $('#myAlertLabel').text("ADVERTENCIA")
+               $('#msj-alert').text(``);
+               $('#msj-alert').append(`<div class="col-lg-11 col-md-11"><br>Elemento eliminado correctamente<br></div>`)
+               $('#alert').modal('toggle');
+               $("#enterado").click(function(){
+                 location.reload();
+               });
+             }else{
+               $('#myAlertLabel').text("ADVERTENCIA")
+               $('#msj-alert').text(``);
+               $('#msj-alert').append(`<div class="col-lg-11 col-md-11"><br>No se pudo eliminar elemento, error en base de datos<br></div>`)
+               $('#alert').modal('toggle');
+             }
          },
-		 error: function( jqXHR, textStatus, errorThrown ) {
-			alert("Error:"+textStatus);
-		}
-     });
- }
+         error: function( jqXHR, textStatus, errorThrown ) {
+           $('#myAlertLabel').text("ERROR")
+           $('#msj-alert').text(``);
+           $('#msj-alert').append(`<div class="col-lg-11 col-md-11"><br>ERROR ${textStatus}<br></div>`)
+           $('#alert').modal('toggle');
+         }
+       });
+     }

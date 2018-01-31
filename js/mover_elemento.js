@@ -63,20 +63,32 @@ $(document).ready(function(){
         llenaMatrizLocal();
         if (coordenadaTemp.length > 0) {
           if(validaEspacioInterno()){
-            let confirmaMovimiento = (confirm("Desea realizar el movimiento del elemento"))?true:false;
-            if (confirmaMovimiento) {
+            $('#myConfirm1Label').text("PREGUNTA");
+            $('#msj-confirm1').text(``);
+            $('#msj-confirm1').append(`<div class="col-lg-11 col-md-11"><br>Desea realizar el movimiento del elemento<br></div>`);
+            $('#confirm1').modal('toggle');
+            $("#aceptar").click(function(){
+              $('#confirm1').modal('toggle');
               actualizarBD (
                 coordenadaTemp[9],
                 coordenadaTemp[0],
                 coordenadaTemp[1],
                 fechaRevisar
-              )
-              console.log(`hola`);
-            }else{
+              );
+            });
+
+            $("#rechazar").click(function(){
               context2.clearRect(0, 0, canvas2.width, canvas2.width);
-            }
+            });
+            $("#cerrar").click(function(){
+              context2.clearRect(0, 0, canvas2.width, canvas2.width);
+            });
+
+            $("#confirm1").on('hidden.bs.modal', function () {
+              context2.clearRect(0, 0, canvas2.width, canvas2.width);
+            });
           }
-        }else{
+        }else if(coordenadaTemp.length < 0){
           context2.clearRect(0, 0, canvas2.width, canvas2.width);
         }
       }
@@ -224,7 +236,10 @@ $(document).ready(function(){
          for (var i = 0; i < arrayComparacion.length; i++) {
            respuesta = llenaMatrizInterno(coordenadaTemp, arrayComparacion[i]); // si llega a coincidir en un punto lo vuelve false
            if(!respuesta){
-             alert("Espacio ocupado por otro elelmento");
+             $('#myAlertLabel').text("ADVERTENCIA")
+             $('#msj-alert').text(``);
+             $('#msj-alert').append(`<div class="col-lg-11 col-md-11"><br>Espacio ocupado por otro elelmento<br></div>`)
+             $('#alert').modal('toggle');
              break;
            }
          }
@@ -281,14 +296,25 @@ function actualizarBD (id, x, y, date){
        success: function(response){
          // resultado es un array que indica exitoso o no.
          if(response == "1"){
-           alert("Espacio actualizado correctamente");
+           $('#myAlertLabel').text("MOVIMIENTO")
+           $('#msj-alert').text(``);
+           $('#msj-alert').append(`<div class="col-lg-11 col-md-11"><br>Espacio actualizado correctamente<br></div>`)
+           $('#alert').modal('toggle');
          }else{
-           alert("No se pudo actualizar el espacio error al actualizar en base de datos");
+           $('#myAlertLabel').text("ERROR")
+           $('#msj-alert').text(``);
+           $('#msj-alert').append(`<div class="col-lg-11 col-md-11"><br>No se pudo actualizar el espacio error al actualizar en base de datos<br></div>`)
+           $('#alert').modal('toggle');
          }
-         location.reload();
+         $("#enterado").click(function(){
+           location.reload();
+         });
        },
        error: function( jqXHR, textStatus, errorThrown ) {
-         alert("Error:"+textStatus);
+         $('#myAlertLabel').text("ERROR")
+         $('#msj-alert').text(``);
+         $('#msj-alert').append(`<div class="col-lg-11 col-md-11"><br>ERROR ${textStatus}<br></div>`)
+         $('#alert').modal('toggle');
        }
      });
    }

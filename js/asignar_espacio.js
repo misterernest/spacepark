@@ -54,6 +54,11 @@ $(document).ready(function(){
     });
 
 
+    $("#enterado").click(function(){
+      $('#alert').modal('toggle');
+    })
+
+
     /*
     Responde al evento del boton guardar del modal
      */
@@ -61,26 +66,31 @@ $(document).ready(function(){
      $("#guardar").click(function(){
        anchoCuadro = $("#anchoX").val();
        largoCuadro =$("#largoY").val();
-       let mensaje = "";
+       let mensaje = new Array();
        let valido = true;
        if ($("#date").val() == '' || $("#time").val() == '') {
-         mensaje = "Fecha y hora inicial son obligatorios\n";
+         mensaje.push("Fecha y hora inicial son obligatorios");
          valido = false;
        }
        if ($("#date1").val() == '' || $("#time1").val() == '') {
-         mensaje += "Fecha y hora final son obligatorios\n";
+         mensaje.push("Fecha y hora final son obligatorios");
          valido = false;
        }
        if(anchoCuadro == '' || largoCuadro == '' || anchoCuadro <= 0 || largoCuadro <= 0){
-         mensaje += "Ancho y largo del area son obligatorios y deben ser positivo\n";
+         mensaje.push("Ancho y largo del area son obligatorios y deben ser positivo");
          valido = false;
        }
        if(validaFecha($("#date").val(), $("#date1").val())){
-         mensaje += "Fecha inicial debe ser mayor de la fecha final";
+         mensaje.push("Fecha inicial debe ser mayor de la fecha final");
          valido = false;
        }
        if(!valido){
-         alert(mensaje);
+         $('#myAlertLabel').text("ADVERTENCIA")
+         for (let i = 0; i < mensaje.length; i++) {
+           $('#msj-alert').append(`<div class="col-lg-11 col-md-11"> ${mensaje[i]} </div>`)
+         }
+         $('#alert').modal('toggle');
+
        }
        if (valido) {
          coordenadaTemp[0][2] = $("#anchoX").val();
@@ -196,8 +206,10 @@ $(document).ready(function(){
        for (var i = 0; i < arrayCoomparacion.length; i++) {
          respuesta = llenaMatrizInterno(coordenadaTemp, arrayCoomparacion[i]); // si llega a coincidir en un punto lo vuelve false
          if(!respuesta){
-           alert("Espacio ocupado por otro elelmento");
+           $('#myAlertLabel').text("ADVERTENCIA")
            $('#modal').modal('toggle');
+           $('#msj-alert').text(`Espacio ocupado por otro elemento`);
+           $('#alert').modal('toggle');
            break;
          }
        }
@@ -269,7 +281,10 @@ function areaDisponible(coordenada){
   if(numEncuentro % 2 != 0){
     puntoValido = true;
   }else{
-    alert("Área no permitida seleccione dentro de las intalaciones");
+    $('#myAlertLabel').text("ADVERTENCIA")
+    $('#msj-alert').text(``);
+    $('#msj-alert').append(`<div class="col-lg-11 col-md-11"><br>Área no permitida seleccione dentro de las intalaciones<br></div>`)
+    $('#alert').modal('toggle');
   }
 
   return puntoValido;
@@ -349,10 +364,20 @@ function guardarBaseDatos (x, y, ancho,largo, date1,date2,time1,time2, categoria
         // Se ejecuta al finalizar
         //   mostrar si está OK en consola
         if(response == "1"){
-          alert("Espacio asignado correctamente");
-          location.reload();
+          $('#myAlertLabel').text("MENSAJE")
+          $('#modal').modal('toggle');
+          $('#msj-alert').text(``);
+          $('#msj-alert').append(`<div class="col-lg-11 col-md-11"><br>Espacio asignado correctamente <br></div>`)
+          $('#alert').modal('toggle');
+          $("#enterado").click(function(){
+            location.reload();
+          });
         }else{
-          alert("No se pudo asignar espacio error al guardar base de datos");
+          $('#myAlertLabel').text("MENSAJE")
+          $('#modal').modal('toggle');
+          $('#msj-alert').text(``);
+          $('#msj-alert').append(`<div class="col-lg-11 col-md-11"><br>No se pudo asignar espacio error al guardar base de datos <br></div>`)
+          $('#alert').modal('toggle');
         }
       }
     });

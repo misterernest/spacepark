@@ -81,6 +81,10 @@
   </div>
 
   <?php include 'modal.html' ?>
+  <?php
+    include 'alert.html';
+    include 'confirm.html';
+  ?>
 
 </body>
 </html>
