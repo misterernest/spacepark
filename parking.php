@@ -17,12 +17,12 @@
   <script type="text/javascript" src="./js/function_global.js"></script>
   <script type="text/javascript" src="./js/code_global.js"></script>
   <script type="text/javascript" src="./js/asignar_espacio.js"></script>
-  <script type="text/javascript" src="./js/range_date.js"></script>
   <script type="text/javascript" src="./js/zoom_lupa.js"></script>
   <script type="text/javascript" src="./js/zoom_mapa.js"></script>
   <script type="text/javascript" src="./js/eliminar_elemento.js"></script>
   <script type="text/javascript" src="./js/cerrar_sesion.js"></script>
   <script type="text/javascript" src="./js/mover_elemento.js"></script>
+  <script type="text/javascript" src="./js/efect_mousemove.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
 
 	<link rel="stylesheet" href="./css/bootstrap-material-datetimepicker.css" />
@@ -49,9 +49,26 @@
   <div class="btn-park btn-eliminar1" id="eliminar">
     <img src="img/eliminar.png" alt="lupa-zoom-in" id="zoom-in">
   </div>
-  <div class="btn-park btn-gant" id="gant">
-    <img src="img/diagrama-grant.png" alt="Diagrama Gant">
+  <a href="gantt.php" target="_blank">
+    <div class="btn-park btn-gant" id="gant">
+      <img src="img/diagrama-grant.png" alt="Diagrama Gant">
+    </div>
+  </a>
+  <div id="info-popup" class="info-popup info-popup-zoom" hidden="hidden">
+    <div>
+      <span id="info-head"></span>
+    </div>
+    <div>
+      <span id="info-cliente"></span>
+    </div>
+    <div >
+      <span id="info-fecha"></span>
+    </div>
+    <div >
+      <span>Recurso:</span><span id="info-size"></span>
+    </div>
   </div>
+
   <a href="session_close.php">
     <div class="btn-park btn-session" id="session">
         <img src="img/cerrar-sesion.png" alt="Cerrar sesion">
@@ -71,17 +88,17 @@
   </div>
   <div class="container">
     <div class="row col-sm-12 col-md-12">
-      <div class="col-sm-10 row col-md-10 barra-fecha">
-        <input id="fecha_range" class="form-control col-sm-12 col-md-12" type="range" name="fecha_barra" min="-59" max="60" step="1" value="0" hidden="hidden">
+      <div class="col-sm-10 row col-md-10 barra-fecha" id="container-range">
+        
       </div>
       <div class="col-sm-2 row col-md-2 barra-fecha">
-        <input class="form-control col-sm-12 col-md-12 form-group" type="text" name="fecha_text" id="fecha_caja">
+        <input id="fecha_caja" type="text" required="true" class="form-control col-sm-12 col-md-12 form-group">
       </div>
     </div>
   </div>
 
-  <?php include 'modal.html' ?>
   <?php
+    include 'modal.html';
     include 'alert.html';
     include 'confirm.html';
   ?>

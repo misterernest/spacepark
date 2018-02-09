@@ -1,3 +1,6 @@
+<?php
+echo '
+<script>
 $(document).ready(function(){
 
 
@@ -55,3 +58,5 @@ $(document).ready(function(){
   }
 
 });
+</script>
+<input id="fecha_range" class="form-control col-sm-12 col-md-12" type="range" name="fecha_barra" min="-33" max="365" step="1" value="0">';

@@ -7,11 +7,21 @@ const zoom_width = width * zoom_proporcion;
 const zoom_height = height*zoom_proporcion;
 const color = "rgb(120, 8, 8)";
 //Asigna un color a cada colorCategoria
+
 const colorCategoria = {
-  contenedor:"rgb(255, 0, 0)",
-  yate:"rgb(51, 204, 51)",
-  velero:"rgb(0, 0, 255)",
-  pesca:"rgb(255, 255, 0)"
+  SAILING_YACHT:"rgb(180, 0, 0)", //RED
+  MOTOR_YACHT:"rgb(20, 170, 20)", //GREEN
+  CAT:"rgb(0, 0, 170)",//BLUE
+  PESCA:"rgb(190, 190, 0)",//YELLOW
+  ELEMENTO:"rgb(180, 0, 170)"//PURPLE
+};
+
+const colorCategoriaResalta = {
+  SAILING_YACHT:"rgb(255, 0, 0)",//RED
+  MOTOR_YACHT:"rgb(51, 204, 51)",//GREEN
+  CAT:"rgb(0, 0, 255)",//BLUE
+  PESCA:"rgb(255, 255, 0)",//YELLOW
+  ELEMENTO:"rgb(220, 0, 210)"//PURPLE
 };
 
 /*Manejo del zoom*/
@@ -35,6 +45,7 @@ let zoom = false;
   const min = 00;
   const seg = 00;
   let mesText = mesNumtext(mm);
+  let mesActual = mesText;
   $('#fecha_caja').val(`${mesText} ${dd}, ${yyyy}`);
 
 // Variable de fecha para el input range
@@ -47,25 +58,33 @@ let zoom = false;
 
 // coordenadas para delimitar la bodega
   const areaDisponible1 = Array(
-    [240, 360],
-    [408, 360],
-    [420, 96],
-    [636, 120],
-    [636, 156],
-    [672, 156],
-    [636, 468],
-    [1548, 552],
-    [1548, 1476],
-    [1368, 1476],
-    [1368, 973],
-    [216, 961],
-    [216, 720],
-    [624, 720],
-    [624, 576],
-    [120, 576],
-    [120, 383],
-    [240, 360]
+    [217, 349],
+    [199, 265],
+    [215, 225],//
+    [404, 93],//
+    [711, 115],//
+    [692, 373],//
+    [1984, 482],//
+    [2121, 746],//
+    [2078, 763],//
+    [2120, 874],//
+    [2051, 957],//
+    [1681, 959],//
+    [1679, 1473],//
+    [1341, 1475],//
+    [1339, 1019],//
+    [258, 1019],//
+    [217, 956],//
+    [78, 956],//
+    [81, 691],//
+    [439, 694],//
+    [440, 589],//
+    [81, 586],//
+    [81, 371],//
+    [217, 349]
   );
+  const areaDisponible2 = new Array();
+  /*
   const areaDisponible2 = Array(
     [1596, 553],
     [1992, 600],
@@ -75,7 +94,7 @@ let zoom = false;
     [2112, 888],
     [1596, 888],
     [1596, 553]
-  );
+  ); */
 
 /* Manejo del evento borrar o mover */
   let seleccionBtnEliminar = false;
@@ -93,7 +112,7 @@ let zoom = false;
     let canvas3 = $("#canvas3").get(0);
     const context3 = canvas3.getContext("2d");
 
-    consultarBaseDatos(`${yyyy}-${mm}-${dd}`, 40, context3, canvas3);
+    consultarBaseDatos(`${yyyy}-${mm}-${dd}`, 180, context3, canvas3);
     $('#fecha_caja').val(`${mesText} ${dd}, ${yyyy}`);
     /* Set inicial en el tamaño para el manejo del zoom */
     $('#img-park').attr("width", zoom_width);
@@ -103,7 +122,7 @@ let zoom = false;
     $('#canvas2').attr("height", zoom_height);
     $('#canvas3').attr("width", zoom_width);
     $('#canvas3').attr("height", zoom_height);
-
-    zonasMuertas(areaDisponible1, context1);
-    zonasMuertas(areaDisponible2, context1);
+    cargarDiv();
+    /* zonasMuertas(areaDisponible1, context1);
+    zonasMuertas(areaDisponible2, context1); */
   });

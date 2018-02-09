@@ -1,10 +1,3 @@
-<!-- 	<div class="container" >
-		<div class="row" id="boton-formulario">
-			<div class="col-lg-8 col-lg-offset-2 text-center">
-				<button data-toggle="modal"  data-target="#modal" class="btn btn-primary btn-lg">Asignar nuevo espacio</button>
-			</div>
-		</div>
-	</div> -->
 
 	<style media="screen">
 		.form-group>input, .form-group>select{
@@ -40,15 +33,21 @@
 								<input id="largoY" type="number" required="true" class="form-control" name="largoY"   autocomplete  placeholder="Largo en metros" >
 							</div>
 						</div>
-						<div class="col-lg-12">
+						<div class="col-lg-6">
 							<div class="form-group">
 								<select type="select" required id="categoria" class="form-control" style="color:rgb(148, 157, 170);">
 									<option value="" >Categoria</option>
-									<option value="contenedor">Contenedor</option>
-					        <option value="yate">Yate</option>
-					        <option value="velero">Velero</option>
-					        <option value="pesca">Pesca</option>
+									<option value="SAILING_YACHT">SAILING YACHT</option>
+					        <option value="MOTOR_YACHT">MOTOR YACHT</option>
+					        <option value="CAT">CAT</option>
+					        <option value="PESCA">PESCA</option>
+									<option value="ELEMENTO">ELEMENTO</option>
 					      </select>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<input id="cliente" type="text" required="true" class="form-control" name="cliente" maxlength="50"  autocomplete  placeholder="Nombre cliente" >
 							</div>
 						</div>
 
@@ -125,15 +124,8 @@
 			format: 'HH:mm'
 		});
 
+
+
 		$.material.init()
 	});
 </script>
-
-
-
-
-	<script type="text/javascript">
-
-	</script>
-</body>
-</html>

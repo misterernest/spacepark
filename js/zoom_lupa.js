@@ -24,8 +24,8 @@ function zoomDo(canvas1, context1, canvas2, context2, canvas3, context3){
     $('#canvas2').attr("height", zoom_height);
     $('#canvas3').attr("width", zoom_width);
     $('#canvas3').attr("height", zoom_height);
-    zonasMuertas(areaDisponible1, context1);
-    zonasMuertas(areaDisponible2, context1);
+    /* zonasMuertas(areaDisponible1, context1);
+    zonasMuertas(areaDisponible2, context1); */
     recorreConsulta(respuestaConsulta, context3, canvas3);
   }else{
     zoom = true;
@@ -51,8 +51,8 @@ function zoomDo(canvas1, context1, canvas2, context2, canvas3, context3){
     $('#canvas3').attr("height", height);
     creaCuadricula(canvas1.width, canvas1.height, context1);
     recorreConsulta(respuestaConsulta, context3, canvas3);
-    zonasMuertas(areaDisponible1, context1);
-    zonasMuertas(areaDisponible2, context1);
+    /* zonasMuertas(areaDisponible1, context1);
+    zonasMuertas(areaDisponible2, context1); */
   }
 }
 

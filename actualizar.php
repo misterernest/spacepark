@@ -14,7 +14,6 @@ if (isset($_POST['id']) && !empty($_POST['id']) &&
 	$y = $_POST['y'];
 	$id = $_POST['id'];
 	$date = $_POST['date'];
-
 	// Conexion base de datos
 	require_once 'config.php';	// consultamos la reserva
 	$query = "SELECT * FROM area_ocupada WHERE id = $id";
@@ -23,36 +22,59 @@ if (isset($_POST['id']) && !empty($_POST['id']) &&
 	$prepared = null;
 	$ancho = $reserva1["ancho_x"];
 	$largo = $reserva1["largo_y"];
+	$fechaI = $reserva1["fecha_incial"];
 	$fechaf = $reserva1["fecha_final"];
 	$categoria = $reserva1["categoria"];
 
-	//insert
-	$queryi = "INSERT INTO `area_ocupada` (
-		`id`,
-		`coordenada_x`,
-		`coordenada_y`,
-		`ancho_x`,
-		`largo_y`,
-		`fecha_incial`,
-		`fecha_final`,
-		`categoria`)
-		VALUES (
-			NULL,
-			'$x',
-			'$y',
-			'$ancho',
-			'$largo',
-			'$date',
-			'$fechaf',
-			'$categoria');";
-	$prepared = $pdo->prepare($queryi);
-	$resulti = $prepared->execute();
+	$fecha2a = explode(" ", $date);
+	$fecha2b = explode("-", $fecha2a[0]);
 
-	// update anterior reserva
-    $queryu = "UPDATE area_ocupada SET fecha_final='$date' WHERE id=$id ";
-    $prepared = $pdo->prepare($queryu);
-    $resultu = $prepared->execute();
-    $prepared = null;
+	$fecha1a = explode(" ", $fechaI);
+	$fecha1b = explode("-", $fecha1a[0]);
+	$valido = false;
+	if ($fecha1b[0] == $fecha2b[0] && $fecha1b[1] == $fecha2b[1] && $fecha1b[2] == $fecha2b[2]) {
+		$valido = false;
+	}else {
+		$valido = true;
+	}
+
+	if ($valido) {
+		//insert
+		$queryi = "INSERT INTO `area_ocupada` (
+			`id`,
+			`coordenada_x`,
+			`coordenada_y`,
+			`ancho_x`,
+			`largo_y`,
+			`fecha_incial`,
+			`fecha_final`,
+			`categoria`)
+			VALUES (
+				NULL,
+				'$x',
+				'$y',
+				'$ancho',
+				'$largo',
+				'$date',
+				'$fechaf',
+				'$categoria');";
+		$prepared = $pdo->prepare($queryi);
+		$resulti = $prepared->execute();
+
+		// update anterior reserva
+		$queryu = "UPDATE area_ocupada SET fecha_final='$date' WHERE id=$id ";
+		$prepared = $pdo->prepare($queryu);
+		$resultu = $prepared->execute();
+		$prepared = null;
+
+	}else{
+		$queryu = "UPDATE area_ocupada SET coordenada_x='$x',coordenada_y='$y' WHERE id=$id ";
+		$prepared = $pdo->prepare($queryu);
+		$resultu = $prepared->execute();
+		$prepared = null;
+		$resulti = true;
+	}
+
 
 	//$resultado = array("consulta"=>$reserva1,"insert"=>$resulti,"update"=>$resultu,"queryi"=>$queryi,"queryu"=>$queryu);
 	//echo json_encode($resultado);

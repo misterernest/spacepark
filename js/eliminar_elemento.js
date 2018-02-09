@@ -28,12 +28,11 @@ $(document).ready(function(){
       if ( idBorrar != 0) {
         $('#myConfirm1Label').text("PREGUNTA");
         $('#msj-confirm1').text(``);
-        $('#msj-confirm1').append(`<div class="col-lg-11 col-md-11"><br>Desea eliminar este elemento<br></div>`);
+        $('#msj-confirm1').append(`<div class="col-lg-11 col-md-11">Desea eliminar este elemento</div>`);
         $('#confirm1').modal('show');
 
         $("#aceptar").click(function(){
           $('#confirm1').modal("hide");
-          console.log(idBorrar);
           eliminarElementoBD(idBorrar);
         });
 
@@ -49,7 +48,7 @@ $(document).ready(function(){
       }else{
         $('#myAlertLabel').text("ADVERTENCIA")
         $('#msj-alert').text(``);
-        $('#msj-alert').append(`<div class="col-lg-11 col-md-11"><br>Seleccione sobre el elemento a eliminar<br></div>`)
+        $('#msj-alert').append(`<div class="col-lg-11 col-md-11">Seleccione sobre el elemento a eliminar</div>`)
         $('#alert').modal('toggle');
       }
     }
@@ -168,7 +167,7 @@ function eliminarElementoBD(id){
              if(response == "1"){
                $('#myAlertLabel').text("ADVERTENCIA")
                $('#msj-alert').text(``);
-               $('#msj-alert').append(`<div class="col-lg-11 col-md-11"><br>Elemento eliminado correctamente<br></div>`)
+               $('#msj-alert').append(`<div class="col-lg-11 col-md-11">Elemento eliminado correctamente</div>`)
                $('#alert').modal('toggle');
                $("#enterado").click(function(){
                  location.reload();
@@ -176,14 +175,14 @@ function eliminarElementoBD(id){
              }else{
                $('#myAlertLabel').text("ADVERTENCIA")
                $('#msj-alert').text(``);
-               $('#msj-alert').append(`<div class="col-lg-11 col-md-11"><br>No se pudo eliminar elemento, error en base de datos<br></div>`)
+               $('#msj-alert').append(`<div class="col-lg-11 col-md-11">No se pudo eliminar elemento, error en base de datos</div>`)
                $('#alert').modal('toggle');
              }
          },
          error: function( jqXHR, textStatus, errorThrown ) {
            $('#myAlertLabel').text("ERROR")
            $('#msj-alert').text(``);
-           $('#msj-alert').append(`<div class="col-lg-11 col-md-11"><br>ERROR ${textStatus}<br></div>`)
+           $('#msj-alert').append(`<div class="col-lg-11 col-md-11">ERROR ${textStatus}</div>`)
            $('#alert').modal('toggle');
          }
        });

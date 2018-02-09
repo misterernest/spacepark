@@ -215,3 +215,8 @@ function public DIBUJA LA LINEA DEL PERIMETRO PERMITIDO
    pos2=Math.floor(pos2/mts2) * mts2;
    return [pos1, pos2];
  }
+
+/*function que carga la barra de rango de fecha*/
+ function cargarDiv(){
+   $('#container-range').load("carga_range.php");
+ }

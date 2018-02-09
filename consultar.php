@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 error_reporting(-1);
 ini_set('display_errors', 'On');
@@ -8,11 +8,13 @@ if ( isset($_POST['date']) && !empty($_POST['date']) && isset($_POST['dias']) &&
 	$fecha = $_POST['date'];
 	$dias = $_POST['dias'];
 	$categoria = $_POST['categoria'];
-	
+
 	//$fechai = date('Y-m-d');
-	$nuevafechai = date('Y-m-d', strtotime("$fecha - $dias days"));
-	$nuevafechaf = date('Y-m-d', strtotime("$fecha + $dias days"));
-	
+	$diasInicial = 33;
+	$diasFinal = 365;
+	$nuevafechai = date('Y-m-d', strtotime("$fecha - $diasInicial days"));
+	$nuevafechaf = date('Y-m-d', strtotime("$fecha + $diasFinal days"));
+
 	// Conexion base de datos
 	require_once 'config.php';
 
@@ -21,7 +23,7 @@ if ( isset($_POST['date']) && !empty($_POST['date']) && isset($_POST['dias']) &&
 	/*if(!empty($categoria)){
 		$query = $query . " AND categoria LIKE '$categoria'";
 	}*/
-		
+
     $prepared = $pdo->query($query);
 	$resultado = $prepared->fetchAll(PDO::FETCH_ASSOC);
     $prepared = null;

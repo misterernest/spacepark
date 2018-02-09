@@ -9,13 +9,16 @@ $(document).ready(function(){
 
   $("#canvas2").mouseup(function(e){
     if (!zoom && !seleccionBtnMover) {
-      let posX1 = e.offsetX/canvas1.width;
-      let posY1 = e.offsetY/canvas1.height;
-      zoomDo(canvas1, context1, canvas2, context2, canvas3, context3);
-      let posX = 954 * posX1;
-      let posY = 1091 * posY1;
-      $("#container-canvas").scrollLeft(posX);
-      $("#container-canvas").scrollTop(posY);
+      zoomMapa(e, canvas1, context1, canvas2, context2, canvas3, context3);
     }
   });
 });
+function zoomMapa(e, canvas1, context1, canvas2, context2, canvas3, context3){
+  let posX1 = e.offsetX/canvas1.width;
+  let posY1 = e.offsetY/canvas1.height;
+  zoomDo(canvas1, context1, canvas2, context2, canvas3, context3);
+  let posX = 954 * posX1;
+  let posY = 1091 * posY1;
+  $("#container-canvas").scrollLeft(posX);
+  $("#container-canvas").scrollTop(posY);
+}

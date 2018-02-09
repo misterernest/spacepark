@@ -13,6 +13,33 @@ body{
 .barra-fecha{
   padding: 1rem;
 }
+.info-popup{
+  background-color: rgba(255,255,255, 0.7);
+  border: 0.5px solid rgb(219,219,219);
+  border-radius: 8px;
+  width: 230px;
+  height: 100px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.35), 0 3px 6px rgba(0,0,0,0.23);
+  z-index: 5;
+  position: absolute;
+  font-size: 1.3rem;
+  padding: 3px
+}
+.info-popup>div{
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+}
+
+.info-popup-zoom0{
+  left:500px;
+  top:20px;
+}
+
+.info-popup-zoom{
+  right:60px;
+  top:90px;
+}
 
 .btn-park{
   width:50px;
