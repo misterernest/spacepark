@@ -24,7 +24,7 @@ $(document).ready(function(){
         zoomDo(canvas1, context1, canvas2, context2, canvas3, context3);
       }
     }
-    coordenadaTemp = [];
+    //coordenadaTemp = [];
   });
 
   $("#canvas2").mousedown(function(e){
@@ -76,34 +76,117 @@ $(document).ready(function(){
         if (coordenadaTemp.length > 0) {
           if(validaEspacioInterno() && !zoom){
             zoomMapa(e, canvas1, context1, canvas2, context2, canvas3, context3);
-
           }else if(validaEspacioInterno() && zoom){
             $('#myConfirm1Label').text("PREGUNTA");
             $('#msj-confirm1').text(``);
             $('#msj-confirm1').append(`<div class="col-lg-11 col-md-11">Desea realizar el movimiento del elemento</div>`);
-            $('#confirm1').modal('toggle');
+            $('#confirm1').modal('show');
             $("#aceptar").click(function(){
-              $('#confirm1').modal('toggle');
-              actualizarBD (
-                coordenadaTemp[9],
-                coordenadaTemp[0],
-                coordenadaTemp[1],
-                fechaRevisar
-              );
+              $('#confirm1').modal('hide');
+              $("#anchoX").val(coordenadaTemp[2]);
+              $("#largoY").val(coordenadaTemp[3]);
+              $("#date").val(coordenadaTemp[4].slice(0, 10));
+              $("#date1").val(coordenadaTemp[5].slice(0, 10));
+              $("#time").val(coordenadaTemp[4].slice(10));
+              $("#time1").val(coordenadaTemp[5].slice(10));
+              $("#categoria").val(coordenadaTemp[8]);
+              $("#cliente").val(coordenadaTemp[7]);
+              $('#modal').modal('show');
+              $("#guardar").click(function(){
+                anchoCuadro = $("#anchoX").val();
+                largoCuadro =$("#largoY").val();
+                let mensaje = new Array();
+                $('#msj-alert').text("");
+                /* actualizarBD (
+                  coordenadaTemp[9],
+                  coordenadaTemp[0],
+                  coordenadaTemp[1],
+                  fechaRevisar
+                ); */
+
+                let valido = true;
+
+                if(anchoCuadro == '' || largoCuadro == '' || anchoCuadro <= 0 || largoCuadro <= 0){
+                  mensaje.push("Ancho y largo del area son obligatorios y deben ser positivo");
+                  valido = false;
+                }
+
+                if ($("#date").val() == '' || $("#time").val() == '') {
+                  mensaje.push("Fecha y hora inicial son obligatorios");
+                  valido = false;
+                }
+
+                if ($("#date1").val() == '' || $("#time1").val() == '') {
+                  mensaje.push("Fecha y hora final son obligatorios");
+                  valido = false;
+                }
+
+                if(validaFecha($("#date").val(), $("#date1").val())){
+                  mensaje.push("Fecha inicial debe ser mayor de la fecha final");
+                  valido = false;
+                }
+
+                if($("#cliente").val() == ''){
+                  mensaje.push("El cliente es un campo obligatorio");
+                  valido = false;
+                }
+                if(!valido){
+                  $('#myAlertLabel').text("ADVERTENCIA")
+                  for (let i = 0; i < mensaje.length; i++) {
+                    $('#msj-alert').append(`<div class="col-lg-11 col-md-11"> ${mensaje[i]} </div>`)
+                  }
+                  $('#alert').modal('show');
+                }else if(valido){
+                  $('#modal').modal('hide');
+                }
+
+                if (valido) {
+                  coordenadaTemp[2] = $("#anchoX").val();
+                  coordenadaTemp[3] = $("#largoY").val();
+                  coordenadaTemp[4] = $("#date").val();
+                  coordenadaTemp[5] = $("#date1").val();
+                  coordenadaTemp[6] = $("#time").val();
+                  coordenadaTemp[7] = $("#time1").val();
+                  coordenadaTemp[8] = $("#categoria").val();
+                  coordenadaTemp[10] = coordenadaTemp[9];
+                  coordenadaTemp[9] = $("#cliente").val();
+                  actualizarBD(
+                    coordenadaTemp[0],
+                    coordenadaTemp[1],
+                    coordenadaTemp[2],
+                    coordenadaTemp[3],
+                    coordenadaTemp[4],
+                    coordenadaTemp[5],
+                    coordenadaTemp[6],
+                    coordenadaTemp[7],
+                    coordenadaTemp[8],
+                    coordenadaTemp[9],
+                    coordenadaTemp[10],
+                    fechaRevisar
+                  );
+                }else{
+                  $('#modal').modal('show');
+                }
+
+              });
             });
 
             $("#rechazar").click(function(){
               context2.clearRect(0, 0, canvas2.width, canvas2.width);
-              $('#confirm1').modal('toggle');
+              $('#confirm1').modal('hide');
             });
             $("#cerrar").click(function(){
               context2.clearRect(0, 0, canvas2.width, canvas2.width);
-              $('#confirm1').modal('toggle');
+              $('#confirm1').modal('hide');
             });
 
             $("#confirm1").on('hidden.bs.modal', function () {
               context2.clearRect(0, 0, canvas2.width, canvas2.width);
             });
+          }else if(!validaEspacioInterno()){
+            context2.clearRect(0, 0, canvas2.width, canvas2.width);
+            if(zoom) zoomDo(canvas1, context1, canvas2, context2, canvas3, context3);
+            coordenadaTemp = [];
           }
         }else if(coordenadaTemp.length <= 0){
           if(zoom) zoomDo(canvas1, context1, canvas2, context2, canvas3, context3);
@@ -137,6 +220,7 @@ $(document).ready(function(){
             coordenadaTemp[3] = arrayAreaCoincide[i].largo_y;
             coordenadaTemp[4] = arrayAreaCoincide[i].fecha_incial;
             coordenadaTemp[5] = arrayAreaCoincide[i].fecha_final;
+            coordenadaTemp[7] = arrayAreaCoincide[i].cliente;
             coordenadaTemp[8] = arrayAreaCoincide[i].categoria;
             coordenadaTemp[9] = arrayAreaCoincide[i].id;
           break;
@@ -268,7 +352,7 @@ $(document).ready(function(){
              $('#myAlertLabel').text("ADVERTENCIA")
              $('#msj-alert').text(``);
              $('#msj-alert').append(`<div class="col-lg-11 col-md-11">Espacio ocupado por otro elelmento</div>`)
-             $('#alert').modal('toggle');
+             $('#alert').modal('show');
              break;
            }
          }
@@ -284,10 +368,10 @@ $(document).ready(function(){
        let x2 = x1 + (arrayComparacion["ancho_x"] * mts2);
        let y2 = y1 + (arrayComparacion["largo_y"] * mts2);
        //parametros que van a buscar coincidencia con rectangulo
-       let OrigenX = coordenaAUbicar["coordenada_x"]*1;
-       let OrigenY = coordenaAUbicar["coordenada_y"]*1;
-       let ancho = coordenaAUbicar["ancho_x"];
-       let largo = coordenaAUbicar["largo_y"];
+       let OrigenX = coordenaAUbicar[0]*1;
+       let OrigenY = coordenaAUbicar[1]*1;
+       let ancho = coordenaAUbicar[2]*1;
+       let largo = coordenaAUbicar[3]*1;
        let arrayCoordComparacion = Array(x1, x2, y1, y2);
        let respuesta = true;
        for (var i = 0; i < ancho; i++) {
@@ -306,7 +390,7 @@ $(document).ready(function(){
 
 
 //actualizarBD(600,150, 9, '2018-03-20 02:53:00');
-function actualizarBD (id, x, y, date){
+function actualizarBD (x, y, ancho,largo, date1,date2,time1,time2, categoria, cliente ,id, date){
  // Convertir a objeto
  var data = {};
 
@@ -314,6 +398,15 @@ function actualizarBD (id, x, y, date){
  data.id = id;
  data.x = x;
  data.y = y;
+ data.ancho = ancho;
+ data.largo = largo;
+ data.date1 = date1;
+ data.date2 = date2;
+ data.time1 = time1;
+ data.time2 = time2;
+ data.categoria = categoria;
+ data.cliente = cliente;
+ console.log(data);
  var url = 'actualizar.php';   //este es el PHP al que se llama por AJAX
 
  	resultado = new Array();
@@ -327,12 +420,12 @@ function actualizarBD (id, x, y, date){
            $('#myAlertLabel').text("MOVIMIENTO")
            $('#msj-alert').text(``);
            $('#msj-alert').append(`<div class="col-lg-11 col-md-11">Espacio actualizado correctamente</div>`)
-           $('#alert').modal('toggle');
+           $('#alert').modal('show');
          }else{
            $('#myAlertLabel').text("ERROR")
            $('#msj-alert').text(``);
            $('#msj-alert').append(`<div class="col-lg-11 col-md-11">No se pudo actualizar el espacio error al actualizar en base de datos</div>`)
-           $('#alert').modal('toggle');
+           $('#alert').modal('show');
          }
          $("#enterado").click(function(){
            location.reload();
@@ -342,7 +435,7 @@ function actualizarBD (id, x, y, date){
          $('#myAlertLabel').text("ERROR")
          $('#msj-alert').text(``);
          $('#msj-alert').append(`<div class="col-lg-11 col-md-11">ERROR ${textStatus}</div>`)
-         $('#alert').modal('toggle');
+         $('#alert').modal('show');
        }
      });
    }

@@ -11,7 +11,7 @@ if (isset($_POST['id']) && !empty($_POST['id']))  {
 	// Datos recibidos
 	$id = $_POST['id'];
 
-	$sql = "DELETE FROM area_ocupada WHERE id =:id";
+	$sql = "DELETE FROM area_ocupada WHERE id ='".$_POST['id']."'";
 	$query = $pdo->prepare($sql);
 	$resulti = $query->execute([
 		'id' => $id

@@ -10,7 +10,7 @@ if ( isset($_POST['date']) && !empty($_POST['date']) && isset($_POST['dias']) &&
 	$categoria = $_POST['categoria'];
 
 	//$fechai = date('Y-m-d');
-	$diasInicial = 33;
+	$diasInicial = 93;
 	$diasFinal = 365;
 	$nuevafechai = date('Y-m-d', strtotime("$fecha - $diasInicial days"));
 	$nuevafechaf = date('Y-m-d', strtotime("$fecha + $diasFinal days"));

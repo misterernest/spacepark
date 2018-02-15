@@ -1,5 +1,6 @@
 <?php
 
+
 $dbHost = 'localhost';
 $dbName = 'ptw_park';
 $dbUser = 'admdbptwpark';
@@ -8,7 +9,7 @@ $dbPass = 'Ldgz17^1';
 /* $dbHost = 'localhost';
 $dbName = 'planner';
 $dbUser = 'ptwplanner';
-$dbPass = 'gQop82^5'; */
+$dbPass = 'ptwpark1298'; */
 
 try {
     $pdo = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUser, $dbPass);

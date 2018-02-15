@@ -2,9 +2,15 @@
 const mts2 = 12;
 const width=2217;
 const height=1598;
-const zoom_proporcion = 0.323;
-const zoom_width = width * zoom_proporcion;
-const zoom_height = height*zoom_proporcion;
+let zoom_proporcion;
+let zoom_width ;
+let zoom_height;
+$(document).ready(function(){
+    zoom_proporcion = $('#container-canvas').width() / width;
+    zoom_width = width * zoom_proporcion;
+    zoom_height = height*zoom_proporcion;
+});
+//const zoom_proporcion = 0.323;
 const color = "rgb(120, 8, 8)";
 //Asigna un color a cada colorCategoria
 

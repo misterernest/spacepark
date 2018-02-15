@@ -105,7 +105,7 @@ $(document).ready(function(){
          $('#alert').modal('show');
 
        }
-       if (valido) {
+       if (valido && !seleccionBtnMover) {
          coordenadaTemp[0][2] = $("#anchoX").val();
          coordenadaTemp[0][3] = $("#largoY").val();
          coordenadaTemp[0][4] = $("#date").val();
@@ -172,14 +172,6 @@ $(document).ready(function(){
     }
   }
 
-  /* Valida fecha la inicial se mayor a la final*/
-  function validaFecha(fecha1, fecha2){
-    let f1 = new Date();
-    let f2 = new Date();
-    f1.setTime(Date.parse(fecha1));
-    f2.setTime(Date.parse(fecha2));
-    return (f1 < f2)? false : true;
-  }
 
   /*
   Crea la matriz de cuadros a dibujar
@@ -399,4 +391,14 @@ function guardarBaseDatos (x, y, ancho,largo, date1,date2,time1,time2, categoria
         }
       }
     });
+  }
+
+
+  /* Valida fecha la inicial se mayor a la final*/
+  function validaFecha(fecha1, fecha2){
+    let f1 = new Date();
+    let f2 = new Date();
+    f1.setTime(Date.parse(fecha1));
+    f2.setTime(Date.parse(fecha2));
+    return (f1 < f2)? false : true;
   }

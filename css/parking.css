@@ -192,6 +192,17 @@ code > p
   width: 100%;
   height: 520px;
 }
+@media screen and (min-width: 1440px) {
+  .width-70{
+    width: 1040px;
+    height: 740px;
+  }
+  .width-100{
+    height: 800px;
+  }
+}
+
+
 .cont-complemento{
   width: 25%;
 }
