@@ -11,6 +11,7 @@ $(document).ready(function(){
       $('#zoom').removeClass("btn-inactivo");
       seleccionBtnEliminar = cambiaEstBtn($("#eliminar"), false);
       seleccionBtnMover = cambiaEstBtn($("#mover"), true);
+      seleccionBtnActualizaFecha = cambiaEstBtn($("#actualiza-fecha"), true);
     }
   });
 
@@ -155,7 +156,7 @@ function eliminarElementoBD(id){
  // Convertir a objeto
  var data = {};
  data.id = id;
- var url = 'eliminarElementoBD.php';   //este es el PHP al que se llama por AJAX
+ var url = 'eliminarelementobd.php';   //este es el PHP al que se llama por AJAX
 
  	resultado = new Array();
      $.ajax({
@@ -182,8 +183,8 @@ function eliminarElementoBD(id){
          error: function( jqXHR, textStatus, errorThrown ) {
            $('#myAlertLabel').text("ERROR")
            $('#msj-alert').text(``);
-           $('#msj-alert').append(`<div class="col-lg-11 col-md-11">ERROR ${textStatus}</div>`)
-           $('#alert').modal('toggle');
+           $('#msj-alert').append(`<div class="col-lg-11 col-md-11">ERROR ${textStatus} - ${errorThrown}</div>`)
+           $('#alert').modal('show');
          }
        });
      }

@@ -16,9 +16,11 @@ $(document).ready(function(){
     if (seleccionBtnMover) {
       $('#zoom').removeClass("btn-inactivo");
       seleccionBtnMover = cambiaEstBtn($("#mover"), true);
+      coordenadaTemp = [];
     }else{
       $('#zoom').addClass("btn-inactivo");
       seleccionBtnMover = cambiaEstBtn($("#mover"), false);
+      seleccionBtnActualizaFecha = cambiaEstBtn($("#actualiza-fecha"), true);
       seleccionBtnEliminar = cambiaEstBtn($("#eliminar"), true);
       if(zoom){
         zoomDo(canvas1, context1, canvas2, context2, canvas3, context3);
@@ -26,9 +28,24 @@ $(document).ready(function(){
     }
     //coordenadaTemp = [];
   });
+  $("#actualiza-fecha").click(function(){
+    if (seleccionBtnActualizaFecha) {
+      $('#zoom').removeClass("btn-inactivo");
+      seleccionBtnActualizaFecha = cambiaEstBtn($("#actualiza-fecha"), true);
+    }else{
+      $('#zoom').addClass("btn-inactivo");
+      seleccionBtnActualizaFecha = cambiaEstBtn($("#actualiza-fecha"), false);
+      seleccionBtnEliminar = cambiaEstBtn($("#eliminar"), true);
+      seleccionBtnMover = cambiaEstBtn($("#mover"), true);
+      if(zoom){
+        zoomDo(canvas1, context1, canvas2, context2, canvas3, context3);
+      }
+    }
+
+  });
 
   $("#canvas2").mousedown(function(e){
-    if (seleccionBtnMover && !zoom) {
+    if (seleccionBtnMover && !zoom && !seleccionBtnActualizaFecha) {
       fechaRevisar = (`${fechaSeleccionada.getFullYear()}-${fechaSeleccionada.getMonth()+1}-${fechaSeleccionada.getDate()} ${fechaSeleccionada.getHours()}:${fechaSeleccionada.getMinutes()}:00`);
       let posCuadro = ubicaCoordenada([(e.offsetX /zoom_proporcion), (e.offsetY / zoom_proporcion)]);
       coordenadaTemp[0] = (posCuadro[0]);
@@ -42,10 +59,25 @@ $(document).ready(function(){
       coordenadaTemp[8] = "contenedor";
       areaDisponibleLocal(respuestaConsulta);
       paint = true;
+    }else if (seleccionBtnActualizaFecha && !zoom) {
+      fechaRevisar = (`${fechaSeleccionada.getFullYear()}-${fechaSeleccionada.getMonth()+1}-${fechaSeleccionada.getDate()} ${fechaSeleccionada.getHours()}:${fechaSeleccionada.getMinutes()}:00`);
+      let posCuadro = [(e.offsetX /zoom_proporcion), (e.offsetY / zoom_proporcion)];
+      coordenadaTemp[0] = (posCuadro[0]);
+      coordenadaTemp[1] = (posCuadro[1]);
+      coordenadaTemp[2] = 1;
+      coordenadaTemp[3] = 1;
+      coordenadaTemp[4] = fechaRevisar;
+      coordenadaTemp[5] = fechaRevisar;
+      coordenadaTemp[6] = `${fechaSeleccionada.getHours()}:00`;
+      coordenadaTemp[7] = `${fechaSeleccionada.getHours()+1}:00`;
+      coordenadaTemp[8] = "contenedor";
+      areaDisponibleLocal(respuestaConsulta);
+      ventanaActualiza(`Desea actualizar los datos del elemento`, 2);
+
     }
   });
   $("#canvas2").mousemove(function(e){
-    if (seleccionBtnMover && coordenadaTemp["id"] != 0 && paint) {
+    if (seleccionBtnMover && coordenadaTemp["id"] != 0 && paint && !seleccionBtnActualizaFecha) {
       coordenadaTemp[0] = e.offsetX;
       coordenadaTemp[1] = e.offsetY;
       mueveElemento();
@@ -53,7 +85,7 @@ $(document).ready(function(){
   });
 
   $("#canvas2").mouseup(function(e){
-      if (seleccionBtnMover && coordenadaTemp[9] != 0) {
+      if (seleccionBtnMover && coordenadaTemp[9] != 0 && !seleccionBtnActualizaFecha) {
         if (zoom) {
           paint = false;
           let posCuadroTemp = new Array();
@@ -77,112 +109,7 @@ $(document).ready(function(){
           if(validaEspacioInterno() && !zoom){
             zoomMapa(e, canvas1, context1, canvas2, context2, canvas3, context3);
           }else if(validaEspacioInterno() && zoom){
-            $('#myConfirm1Label').text("PREGUNTA");
-            $('#msj-confirm1').text(``);
-            $('#msj-confirm1').append(`<div class="col-lg-11 col-md-11">Desea realizar el movimiento del elemento</div>`);
-            $('#confirm1').modal('show');
-            $("#aceptar").click(function(){
-              $('#confirm1').modal('hide');
-              $("#anchoX").val(coordenadaTemp[2]);
-              $("#largoY").val(coordenadaTemp[3]);
-              $("#date").val(coordenadaTemp[4].slice(0, 10));
-              $("#date1").val(coordenadaTemp[5].slice(0, 10));
-              $("#time").val(coordenadaTemp[4].slice(10));
-              $("#time1").val(coordenadaTemp[5].slice(10));
-              $("#categoria").val(coordenadaTemp[8]);
-              $("#cliente").val(coordenadaTemp[7]);
-              $('#modal').modal('show');
-              $("#guardar").click(function(){
-                anchoCuadro = $("#anchoX").val();
-                largoCuadro =$("#largoY").val();
-                let mensaje = new Array();
-                $('#msj-alert').text("");
-                /* actualizarBD (
-                  coordenadaTemp[9],
-                  coordenadaTemp[0],
-                  coordenadaTemp[1],
-                  fechaRevisar
-                ); */
-
-                let valido = true;
-
-                if(anchoCuadro == '' || largoCuadro == '' || anchoCuadro <= 0 || largoCuadro <= 0){
-                  mensaje.push("Ancho y largo del area son obligatorios y deben ser positivo");
-                  valido = false;
-                }
-
-                if ($("#date").val() == '' || $("#time").val() == '') {
-                  mensaje.push("Fecha y hora inicial son obligatorios");
-                  valido = false;
-                }
-
-                if ($("#date1").val() == '' || $("#time1").val() == '') {
-                  mensaje.push("Fecha y hora final son obligatorios");
-                  valido = false;
-                }
-
-                if(validaFecha($("#date").val(), $("#date1").val())){
-                  mensaje.push("Fecha inicial debe ser mayor de la fecha final");
-                  valido = false;
-                }
-
-                if($("#cliente").val() == ''){
-                  mensaje.push("El cliente es un campo obligatorio");
-                  valido = false;
-                }
-                if(!valido){
-                  $('#myAlertLabel').text("ADVERTENCIA")
-                  for (let i = 0; i < mensaje.length; i++) {
-                    $('#msj-alert').append(`<div class="col-lg-11 col-md-11"> ${mensaje[i]} </div>`)
-                  }
-                  $('#alert').modal('show');
-                }else if(valido){
-                  $('#modal').modal('hide');
-                }
-
-                if (valido) {
-                  coordenadaTemp[2] = $("#anchoX").val();
-                  coordenadaTemp[3] = $("#largoY").val();
-                  coordenadaTemp[4] = $("#date").val();
-                  coordenadaTemp[5] = $("#date1").val();
-                  coordenadaTemp[6] = $("#time").val();
-                  coordenadaTemp[7] = $("#time1").val();
-                  coordenadaTemp[8] = $("#categoria").val();
-                  coordenadaTemp[10] = coordenadaTemp[9];
-                  coordenadaTemp[9] = $("#cliente").val();
-                  actualizarBD(
-                    coordenadaTemp[0],
-                    coordenadaTemp[1],
-                    coordenadaTemp[2],
-                    coordenadaTemp[3],
-                    coordenadaTemp[4],
-                    coordenadaTemp[5],
-                    coordenadaTemp[6],
-                    coordenadaTemp[7],
-                    coordenadaTemp[8],
-                    coordenadaTemp[9],
-                    coordenadaTemp[10],
-                    fechaRevisar
-                  );
-                }else{
-                  $('#modal').modal('show');
-                }
-
-              });
-            });
-
-            $("#rechazar").click(function(){
-              context2.clearRect(0, 0, canvas2.width, canvas2.width);
-              $('#confirm1').modal('hide');
-            });
-            $("#cerrar").click(function(){
-              context2.clearRect(0, 0, canvas2.width, canvas2.width);
-              $('#confirm1').modal('hide');
-            });
-
-            $("#confirm1").on('hidden.bs.modal', function () {
-              context2.clearRect(0, 0, canvas2.width, canvas2.width);
-            });
+            ventanaActualiza(`Desea realizar el movimiento del elemento`, 1);
           }else if(!validaEspacioInterno()){
             context2.clearRect(0, 0, canvas2.width, canvas2.width);
             if(zoom) zoomDo(canvas1, context1, canvas2, context2, canvas3, context3);
@@ -194,6 +121,114 @@ $(document).ready(function(){
         }
       }
   });
+
+  function ventanaActualiza(mensaje, tipoActualizacion){
+
+      $('#myConfirm1Label').text("PREGUNTA");
+      $('#msj-confirm1').text(``);
+      $('#msj-confirm1').append(`<div class="col-lg-11 col-md-11">${mensaje}</div>`);
+      $('#confirm1').modal('show');
+      $("#aceptar").click(function(){
+        $('#confirm1').modal('hide');
+        $("#anchoX").val(coordenadaTemp[2]);
+        $("#largoY").val(coordenadaTemp[3]);
+        $("#date").val(coordenadaTemp[4].slice(0, 10));
+        $("#date1").val(coordenadaTemp[5].slice(0, 10));
+        $("#time").val(coordenadaTemp[4].slice(11));
+        $("#time1").val(coordenadaTemp[5].slice(11));
+        $("#categoria").val(coordenadaTemp[8]);
+        $("#cliente").val(coordenadaTemp[7]);
+        $('#modal').modal('show');
+        $("#guardar").click(function(){
+          anchoCuadro = $("#anchoX").val();
+          largoCuadro =$("#largoY").val();
+          let mensaje = new Array();
+          $('#msj-alert').text("");
+
+
+          let valido = true;
+
+          if(anchoCuadro == '' || largoCuadro == '' || anchoCuadro <= 0 || largoCuadro <= 0){
+            mensaje.push("Ancho y largo del area son obligatorios y deben ser positivo");
+            valido = false;
+          }
+
+          if ($("#date").val() == '' || $("#time").val() == '') {
+            mensaje.push("Fecha y hora inicial son obligatorios");
+            valido = false;
+          }
+
+          if ($("#date1").val() == '' || $("#time1").val() == '') {
+            mensaje.push("Fecha y hora final son obligatorios");
+            valido = false;
+          }
+
+          if(validaFecha($("#date").val(), $("#date1").val())){
+            mensaje.push("Fecha inicial debe ser mayor de la fecha final");
+            valido = false;
+          }
+
+          if($("#cliente").val() == ''){
+            mensaje.push("El cliente es un campo obligatorio");
+            valido = false;
+          }
+          if(!valido){
+            $('#myAlertLabel').text("ADVERTENCIA")
+            for (let i = 0; i < mensaje.length; i++) {
+              $('#msj-alert').append(`<div class="col-lg-11 col-md-11"> ${mensaje[i]} </div>`)
+            }
+            $('#alert').modal('show');
+          }else if(valido){
+            $('#modal').modal('hide');
+          }
+
+          if (valido) {
+            coordenadaTemp[2] = $("#anchoX").val();
+            coordenadaTemp[3] = $("#largoY").val();
+            coordenadaTemp[4] = $("#date").val();
+            coordenadaTemp[5] = $("#date1").val();
+            coordenadaTemp[6] = $("#time").val();
+            coordenadaTemp[7] = $("#time1").val();
+            coordenadaTemp[8] = $("#categoria").val();
+            coordenadaTemp[10] = coordenadaTemp[9];
+            coordenadaTemp[9] = $("#cliente").val();
+            actualizarBD(
+              coordenadaTemp[0],
+              coordenadaTemp[1],
+              coordenadaTemp[2],
+              coordenadaTemp[3],
+              coordenadaTemp[4],
+              coordenadaTemp[5],
+              coordenadaTemp[6],
+              coordenadaTemp[7],
+              coordenadaTemp[8],
+              coordenadaTemp[9],
+              coordenadaTemp[10],
+              fechaRevisar,
+              tipoActualizacion
+            );
+          }else{
+            $('#modal').modal('show');
+          }
+
+        });
+      });
+
+      $("#rechazar").click(function(){
+        context2.clearRect(0, 0, canvas2.width, canvas2.width);
+        $('#confirm1').modal('hide');
+      });
+      $("#cerrar").click(function(){
+        context2.clearRect(0, 0, canvas2.width, canvas2.width);
+        $('#confirm1').modal('hide');
+      });
+
+      $("#confirm1").on('hidden.bs.modal', function () {
+        context2.clearRect(0, 0, canvas2.width, canvas2.width);
+      });
+
+  }
+
   function areaDisponibleLocal(arrayAreasOcupadas){
     let arrayAreaCoincide = new Array();
     let date1 = new Date();
@@ -390,7 +425,7 @@ $(document).ready(function(){
 
 
 //actualizarBD(600,150, 9, '2018-03-20 02:53:00');
-function actualizarBD (x, y, ancho,largo, date1,date2,time1,time2, categoria, cliente ,id, date){
+function actualizarBD (x, y, ancho,largo, date1,date2,time1,time2, categoria, cliente ,id, date, typeUpdate){
  // Convertir a objeto
  var data = {};
 
@@ -406,7 +441,7 @@ function actualizarBD (x, y, ancho,largo, date1,date2,time1,time2, categoria, cl
  data.time2 = time2;
  data.categoria = categoria;
  data.cliente = cliente;
- console.log(data);
+ data.typeUpdate = typeUpdate;
  var url = 'actualizar.php';   //este es el PHP al que se llama por AJAX
 
  	resultado = new Array();
@@ -434,7 +469,7 @@ function actualizarBD (x, y, ancho,largo, date1,date2,time1,time2, categoria, cl
        error: function( jqXHR, textStatus, errorThrown ) {
          $('#myAlertLabel').text("ERROR")
          $('#msj-alert').text(``);
-         $('#msj-alert').append(`<div class="col-lg-11 col-md-11">ERROR ${textStatus}</div>`)
+         $('#msj-alert').append(`<div class="col-lg-11 col-md-11">ERROR ${textStatus} - ${jqXHR} - ${errorThrown}</div>`)
          $('#alert').modal('show');
        }
      });

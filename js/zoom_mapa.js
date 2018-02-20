@@ -8,7 +8,7 @@ $(document).ready(function(){
   const context3 = canvas3.getContext("2d");
 
   $("#canvas2").mouseup(function(e){
-    if (!zoom && !seleccionBtnMover) {
+    if (!zoom && !seleccionBtnMover && !seleccionBtnActualizaFecha) {
       zoomMapa(e, canvas1, context1, canvas2, context2, canvas3, context3);
     }
   });

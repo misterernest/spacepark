@@ -46,6 +46,9 @@
   <div class="btn-park btn-mover1" id="mover">
     <img src="img/mover.png" alt="lupa-zoom-in" id="zoom-in">
   </div>
+  <div class="btn-park btn-actualizarFecha1" id="actualiza-fecha">
+    <img src="img/editar-fecha.png" alt="lupa-zoom-in" id="zoom-in">
+  </div>
   <div class="btn-park btn-eliminar1" id="eliminar">
     <img src="img/eliminar.png" alt="lupa-zoom-in" id="zoom-in">
   </div>

@@ -12,15 +12,12 @@ $(document).ready(function(){
     $('#canvas2').mousedown(function(e){
 
     });
-//prueba de coordenadaTemp
-    /* $('#canvas2').mousedown(function(e){
-      console.log(`${e.offsetX}, ${e.offsetY}`);
-    }); */
+
     /*
   Funciones que maneja el evento del mouse sobre el canvas2 para pintar recuadros
      */
     $('#canvas2').mouseup(function(e){
-      if (zoom && !seleccionBtnEliminar && !seleccionBtnMover) {
+      if (zoom && !seleccionBtnEliminar && !seleccionBtnMover && !seleccionBtnActualizaFecha) {
         let posCuadro = ubicaCoordenada([e.offsetX, e.offsetY]);
         if (areaDisponible(posCuadro)) {
           resBusca = buscaCoordenada(posCuadro,coordenadaTemp);
@@ -105,7 +102,7 @@ $(document).ready(function(){
          $('#alert').modal('show');
 
        }
-       if (valido && !seleccionBtnMover) {
+       if (valido && !seleccionBtnMover && !seleccionBtnActualizaFecha) {
          coordenadaTemp[0][2] = $("#anchoX").val();
          coordenadaTemp[0][3] = $("#largoY").val();
          coordenadaTemp[0][4] = $("#date").val();
@@ -389,6 +386,12 @@ function guardarBaseDatos (x, y, ancho,largo, date1,date2,time1,time2, categoria
           $('#msj-alert').append(`<div class="col-lg-11 col-md-11">No se pudo asignar espacio error al guardar base de datos </div>`)
           $('#alert').modal('show');
         }
+      },
+      error: function( jqXHR, textStatus, errorThrown ) {
+        $('#myAlertLabel').text("ERROR")
+        $('#msj-alert').text(``);
+        $('#msj-alert').append(`<div class="col-lg-11 col-md-11">ERROR ${textStatus} - ${jqXHR} - ${errorThrown}</div>`)
+        $('#alert').modal('toggle');
       }
     });
   }

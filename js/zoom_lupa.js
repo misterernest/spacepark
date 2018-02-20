@@ -12,6 +12,8 @@ function zoomDo(canvas1, context1, canvas2, context2, canvas3, context3){
     $('#zoom').removeClass("btn-lupa2");
     $('#mover').addClass("btn-mover1");
     $('#mover').removeClass("btn-mover2");
+    $('#actualiza-fecha').addClass("btn-actualizarFecha1");
+    $('#actualiza-fecha').removeClass("btn-actualizarFecha2");
     $('#eliminar').addClass("btn-eliminar1");
     $('#eliminar').removeClass("btn-eliminar2");
     $('#categorias').removeAttr("hidden", "hidden");
@@ -34,6 +36,8 @@ function zoomDo(canvas1, context1, canvas2, context2, canvas3, context3){
     $('#zoom').addClass("btn-lupa2");
     $('#mover').addClass("btn-mover2");
     $('#mover').removeClass("btn-mover1");
+    $('#actualiza-fecha').removeClass("btn-actualizarFecha1");
+    $('#actualiza-fecha').addClass("btn-actualizarFecha2");
     $('#eliminar').addClass("btn-eliminar2");
     $('#eliminar').removeClass("btn-eliminar1");
     $('#gant').attr("hidden", "hidden");

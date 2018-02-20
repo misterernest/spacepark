@@ -86,19 +86,27 @@ body{
   top:10px;
 }
 .btn-mover1{
-  right:190px;
+  right:250px;
   top:10px;
 }
 .btn-mover2{
   right:70px;
   top:10px;
 }
+.btn-actualizarFecha1{
+  right:190px;
+  top:10px;
+}
+.btn-actualizarFecha2{
+  right:130px;
+  top:10px;
+}
 .btn-lupa1{
-  right:250px;
+  right:310px;
   top:10px;
 }
 .btn-lupa2{
-  right:130px;
+  right:190px;
   top:10px;
 }
 .btn-gant{

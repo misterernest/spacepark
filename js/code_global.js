@@ -105,6 +105,7 @@ let zoom = false;
 /* Manejo del evento borrar o mover */
   let seleccionBtnEliminar = false;
   let seleccionBtnMover = false;
+  let seleccionBtnActualizaFecha = false;
 
 
 
