@@ -8,6 +8,7 @@ Funcion que pinta los cuadros
      colorCategoria=color,
      sizeX = (mts2 - 2),
      sizeY = (mts2 - 2),
+     cliente=""
    ){
      if(context){
        context.lineWidth = 0.5;
@@ -25,6 +26,15 @@ Funcion que pinta los cuadros
          sizeX,
          sizeY
        );
+       context.textAlign="center";
+       context.font="bold 1rem";
+       context.fillStyle = "black";
+       context.fillText(
+         cliente,
+         coordenada[0]+sizeX/2,
+         coordenada[1]+sizeY/2,
+         sizeX
+       );
      }
    }
 
@@ -41,7 +51,8 @@ function pintaAreaOcupada(objConsulta, context){
       context,
       colorCategoria[objConsulta["categoria"]],
       objConsulta["ancho_x"]*mts2,
-      objConsulta["largo_y"]*mts2
+      objConsulta["largo_y"]*mts2,
+      objConsulta["cliente"]
     )
   }else{
     repinta(
@@ -52,7 +63,8 @@ function pintaAreaOcupada(objConsulta, context){
       context,
       colorCategoria[objConsulta["categoria"]],
       objConsulta["ancho_x"] * mts2 *zoom_proporcion,
-      objConsulta["largo_y"] * mts2 *zoom_proporcion
+      objConsulta["largo_y"] * mts2 *zoom_proporcion,
+      objConsulta["cliente"]
     )
   }
 }
