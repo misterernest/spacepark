@@ -17,7 +17,7 @@ body{
   background-color: rgba(255,255,255, 0.7);
   border: 0.5px solid rgb(219,219,219);
   border-radius: 8px;
-  width: 230px;
+  width: 400px;
   height: 100px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.35), 0 3px 6px rgba(0,0,0,0.23);
   z-index: 5;
@@ -27,7 +27,7 @@ body{
 }
 .info-popup>div{
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin: 5px 0;
 }
 

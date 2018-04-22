@@ -10,16 +10,20 @@ $(document).ready(function(){
     zoom_width = width * zoom_proporcion;
     zoom_height = height*zoom_proporcion;
 });
+//Constante dia de la semana
+const dias = new Array ("Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado");
 //const zoom_proporcion = 0.323;
 const color = "rgb(120, 8, 8)";
 //Asigna un color a cada colorCategoria
+
 
 const colorCategoria = {
   SAILING_YACHT:"rgb(180, 0, 0)", //RED
   MOTOR_YACHT:"rgb(20, 170, 20)", //GREEN
   CAT:"rgb(0, 0, 170)",//BLUE
   PESCA:"rgb(190, 190, 0)",//YELLOW
-  ELEMENTO:"rgb(180, 0, 170)"//PURPLE
+  ELEMENTO:"rgb(180, 0, 170)",//PURPLE
+  TENDER:"rgb(215,49,31)"//TOMATO
 };
 
 const colorCategoriaResalta = {
@@ -27,7 +31,8 @@ const colorCategoriaResalta = {
   MOTOR_YACHT:"rgb(51, 204, 51)",//GREEN
   CAT:"rgb(0, 0, 255)",//BLUE
   PESCA:"rgb(255, 255, 0)",//YELLOW
-  ELEMENTO:"rgb(220, 0, 210)"//PURPLE
+  ELEMENTO:"rgb(220, 0, 210)",//PURPLE
+  TENDER:"rgb(255,99,71)"//TOMATO
 };
 
 /*Manejo del zoom*/

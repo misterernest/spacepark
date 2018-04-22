@@ -34,7 +34,7 @@ $(document).ready(function(){
         let mes1 = mesNumtext(dateA.getMonth()+1);
         dateB.setTime(Date.parse(arrayAreasOcupadas[idResaltar].fecha_final));
         let mes2 = mesNumtext(dateB.getMonth()+1);
-        $("#info-fecha").text(`${mes1} ${dateA.getDate()}, ${dateA.getFullYear()} - ${mes2} ${dateB.getDate()}, ${dateB.getFullYear()}`);
+        $("#info-fecha").text(`${dias[dateA.getDay()]} ${dateA.getDate()} de ${mes1} de ${dateA.getFullYear()} - ${dias[dateB.getDay()]} ${dateB.getDate()} de ${mes2} de ${dateB.getFullYear()}`);
         $("#info-size").text(`W:${arrayAreasOcupadas[idResaltar].ancho_x} mts X H:${arrayAreasOcupadas[idResaltar].largo_y} mts`);
         if(zoom){
           context2.fillRect(
