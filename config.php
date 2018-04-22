@@ -3,8 +3,8 @@
 
 $dbHost = 'localhost';
 $dbName = 'ptw_park';
-$dbUser = 'developer ';
-$dbPass = 'developer';
+$dbUser = 'root';
+$dbPass = '';
 
 /* $dbHost = 'localhost';
 $dbName = 'planner';

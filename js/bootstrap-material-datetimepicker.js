@@ -353,7 +353,7 @@
               },
               initHours: function ()
               {
-                 this.currentView = 1;
+                 this.currentView = 2;
 
                  this.showTime(this.currentDate);
                  this.initMeridienButtons();
@@ -513,7 +513,7 @@
               animateHands: function ()
               {
                  var H = this.currentDate.hour();
-                 var M = this.currentDate.minute();
+                 var M = this.currentDate.minute(0);
 
                  var hh = this.$dtpElement.find('.hour-hand');
                  hh[0].setAttribute('transform', "rotate(" + 360 * H / 12 + ")");
@@ -849,7 +849,7 @@
                  } else
                  {
                     var _date = moment(this.currentDate);
-                    _date.minute(value).second(0);
+                    _date.minute(0).second(0);
 
                     result = !(this.isAfterMinDate(_date, true, true) === false || this.isBeforeMaxDate(_date, true, true) === false);
                  }
@@ -1178,7 +1178,7 @@
                     $(parent.find('#m-' + value)).attr('fill', '#8BC34A');
                     $(parent.find('#tm-' + value)).attr('fill', '#fff');
 
-                    this.currentDate.minute(parseInt(value));
+                    this.currentDate.minute(0);
                     this.showTime(this.currentDate);
 
                     this.animateHands();

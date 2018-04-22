@@ -124,11 +124,11 @@ $(document).ready(function(){
 
   function ventanaActualiza(mensaje, tipoActualizacion){
 
-      $('#myConfirm1Label').text("PREGUNTA");
+      /* $('#myConfirm1Label').text("PREGUNTA");
       $('#msj-confirm1').text(``);
       $('#msj-confirm1').append(`<div class="col-lg-11 col-md-11">${mensaje}</div>`);
-      $('#confirm1').modal('show');
-      $("#aceptar").click(function(){
+      $('#confirm1').modal('show'); */
+
         $('#confirm1').modal('hide');
         $("#anchoX").val(coordenadaTemp[2]);
         $("#largoY").val(coordenadaTemp[3]);
@@ -212,7 +212,6 @@ $(document).ready(function(){
           }
 
         });
-      });
 
       $("#rechazar").click(function(){
         context2.clearRect(0, 0, canvas2.width, canvas2.width);
