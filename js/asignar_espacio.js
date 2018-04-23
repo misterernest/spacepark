@@ -111,6 +111,8 @@ $(document).ready(function(){
          coordenadaTemp[0][7] = $("#time1").val();
          coordenadaTemp[0][8] = $("#categoria").val();
          coordenadaTemp[0][9] = $("#cliente").val();
+         coordenadaTemp[0][10] = 0;
+         coordenadaTemp[0][11] = $("#comentario").val();
 
          llenaMatriz(coordenadaTemp[0][2] , coordenadaTemp[0][3]);
          if (coordenadaTemp[0].length > 2 ) {
@@ -125,7 +127,9 @@ $(document).ready(function(){
                coordenadaTemp[0][6],
                coordenadaTemp[0][7],
                coordenadaTemp[0][8],
-               coordenadaTemp[0][9]
+               coordenadaTemp[0][9],
+               coordenadaTemp[0][10],
+               coordenadaTemp[0][11]
              );
            }
          }
@@ -349,7 +353,7 @@ function mayorAMenor(num1, num2){
 
 // AJAX Guardar Formulario
 
-function guardarBaseDatos (x, y, ancho,largo, date1,date2,time1,time2, categoria, cliente){
+function guardarBaseDatos (x, y, ancho,largo, date1,date2,time1,time2, categoria, cliente, angulo, comentario){
   // Convertir a objeto
   var data = {};
   data.x = x;
@@ -362,9 +366,11 @@ function guardarBaseDatos (x, y, ancho,largo, date1,date2,time1,time2, categoria
   data.time2 = time2;
   data.categoria = categoria;
   data.cliente = cliente;
+  data.angulo = angulo;
+  data.comentario = comentario;
   var url = 'guardar.php';   //este es el PHP al que se llama por AJAX
     $.ajax({
-      method: 'POST',
+      method: 'post',
       url: url,
       data: data,   //acá están todos los parámetros (valores a enviar) del POST
       success: function(response){

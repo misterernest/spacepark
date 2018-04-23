@@ -6,7 +6,6 @@
 //error_reporting(-1);
 //ini_set('display_errors', 'On');
 
-
 if (
   isset($_POST['x']) &&
   !empty($_POST['x']) &&
@@ -27,8 +26,11 @@ if (
   isset($_POST['categoria']) &&
   !empty($_POST['categoria']) &&
   isset($_POST['cliente']) &&
-  !empty($_POST['cliente']))  {
+  !empty($_POST['cliente'])&&
+  isset($_POST['angulo']) &&
+  isset($_POST['comentario']))  {
 	// Datos recibidos
+  $id = NULL;
   $x = $_POST['x'];
 	$y = $_POST['y'];
 	$ancho = $_POST['ancho'];
@@ -39,24 +41,40 @@ if (
 	$time2 = $_POST['time2'];
 	$categoria = $_POST['categoria'];
   $cliente = $_POST['cliente'];
+  $angulo = $_POST['angulo'];
+  $comentario = $_POST['comentario'];
 	// Conexion base de datos
 	require_once 'config.php';
 	// insert
-  $query = "INSERT INTO `area_ocupada`
+  $query = "INSERT INTO area_ocupada
   (
-    `id`,
-    `coordenada_x`,
-    `coordenada_y`,
-    `ancho_x`,
-    `largo_y`,
-    `fecha_incial`,
-    `fecha_final`,
-    `categoria`,
-    `cliente`
+    id,
+    coordenada_x,
+    coordenada_y,
+    ancho_x,
+    largo_y,
+    fecha_incial,
+    fecha_final,
+    categoria,
+    cliente,
+    angulo,
+    comentario
   ) VALUES (
-    NULL, '$x', '$y', '$ancho', '$largo', '$date1 $time1', '$date2 $time2', '$categoria', '$cliente');";
+    :id, :x, :y, :ancho, :largo, :fecha_incial , :fecha_final , :categoria, :cliente, :angulo, :comentario);";
   $prepared = $pdo->prepare($query);
-  $resultado = $prepared->execute();
+  $resultado = $prepared->execute([
+    'id'=>$id,
+    'x'=>$x,
+    'y'=>$y,
+    'ancho'=>$ancho,
+    'largo'=>$largo,
+    'fecha_incial'=>$date1 ." ". $time1,
+    'fecha_final'=>$date2 ." ". $time2,
+    'categoria'=>$categoria,
+    'cliente'=>$cliente,
+    'angulo'=>$angulo,
+    'comentario'=>$comentario
+  ]);
   $prepared = null;
 	if ($resultado) {
       echo 1;

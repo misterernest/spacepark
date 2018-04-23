@@ -28,7 +28,8 @@ isset($_POST['cliente']) && !empty($_POST['cliente']) &&
 isset($_POST['date']) && !empty($_POST['date']) &&
 isset($_POST['ancho']) && !empty($_POST['ancho']) &&
 isset($_POST['largo']) && !empty($_POST['largo']) &&
-isset($_POST['typeUpdate']) && !empty($_POST['typeUpdate']))  {
+isset($_POST['typeUpdate']) && !empty($_POST['typeUpdate'])&&
+isset($_POST['comentario']))  {
 	// Datos recibidos
 	$xPost = $_POST['x'];
 	$yPost = $_POST['y'];
@@ -43,6 +44,7 @@ isset($_POST['typeUpdate']) && !empty($_POST['typeUpdate']))  {
 	$id = $_POST['id'];
 	$date = $_POST['date'];
 	$tipoActualizacion = $_POST['typeUpdate'];
+	$comentario = $_POST['comentario'];
 	// Conexion base de datos
 	require_once 'config.php';	// consultamos la reserva
 	$query = "SELECT * FROM area_ocupada WHERE id = $id";
@@ -83,9 +85,10 @@ isset($_POST['typeUpdate']) && !empty($_POST['typeUpdate']))  {
 				`fecha_incial`,
 				`fecha_final`,
 				`categoria`,
-				`cliente`
+				`cliente`,
+				`comentario`
 			) VALUES (
-				NULL, '$xPost', '$yPost', '$ancho', '$largo', '$date', '$date2 $time2', '$categoriaPost', '$clientePost');";
+				NULL, '$xPost', '$yPost', '$ancho', '$largo', '$date', '$date2 $time2', '$categoriaPost', '$clientePost', '$comentario');";
 			$prepared = $pdo->prepare($queryi);
 			$resulti = $prepared->execute();
 			$prepared = null;
@@ -94,7 +97,8 @@ isset($_POST['typeUpdate']) && !empty($_POST['typeUpdate']))  {
 			$queryu = "UPDATE area_ocupada
 				SET fecha_final='$date',
 				cliente='$clientePost' ,
-				categoria='$categoriaPost'
+				categoria='$categoriaPost',
+				comentario='$comentario'
 				WHERE id=$id";
 				$prepared = $pdo->prepare($queryu);
 				$resultu = $prepared->execute();
@@ -107,7 +111,8 @@ isset($_POST['typeUpdate']) && !empty($_POST['typeUpdate']))  {
 			coordenada_y='$yPost',
 			fecha_final='$date2 $time2',
 			cliente='$clientePost',
-			categoria='$categoriaPost'
+			categoria='$categoriaPost',
+			comentario='$comentario'
 			WHERE id=$id";
 			$prepared = $pdo->prepare($queryu);
 			$resultu = $prepared->execute();
@@ -119,7 +124,8 @@ isset($_POST['typeUpdate']) && !empty($_POST['typeUpdate']))  {
 		SET fecha_final='$date2 $time2',
 		fecha_incial = '$date1 $time1',
 		cliente='$clientePost' ,
-		categoria='$categoriaPost'
+		categoria='$categoriaPost',
+		comentario='$comentario'
 		WHERE id=$id ";
 		$prepared = $pdo->prepare($queryu);
 		$resultu = $prepared->execute();

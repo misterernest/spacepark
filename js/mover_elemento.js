@@ -130,6 +130,7 @@ $(document).ready(function(){
       $('#confirm1').modal('show'); */
 
         $('#confirm1').modal('hide');
+        console.log(coordenadaTemp);
         $("#anchoX").val(coordenadaTemp[2]);
         $("#largoY").val(coordenadaTemp[3]);
         $("#date").val(coordenadaTemp[4].slice(0, 10));
@@ -138,6 +139,7 @@ $(document).ready(function(){
         $("#time1").val(coordenadaTemp[5].slice(11));
         $("#categoria").val(coordenadaTemp[8]);
         $("#cliente").val(coordenadaTemp[7]);
+        $("#comentario").val(coordenadaTemp[11]);
         $('#modal').modal('show');
         $("#guardar").click(function(){
           anchoCuadro = $("#anchoX").val();
@@ -192,6 +194,7 @@ $(document).ready(function(){
             coordenadaTemp[8] = $("#categoria").val();
             coordenadaTemp[10] = coordenadaTemp[9];
             coordenadaTemp[9] = $("#cliente").val();
+            coordenadaTemp[11] = $("#comentario").val();
             actualizarBD(
               coordenadaTemp[0],
               coordenadaTemp[1],
@@ -204,6 +207,7 @@ $(document).ready(function(){
               coordenadaTemp[8],
               coordenadaTemp[9],
               coordenadaTemp[10],
+              coordenadaTemp[11],
               fechaRevisar,
               tipoActualizacion
             );
@@ -257,6 +261,8 @@ $(document).ready(function(){
             coordenadaTemp[7] = arrayAreaCoincide[i].cliente;
             coordenadaTemp[8] = arrayAreaCoincide[i].categoria;
             coordenadaTemp[9] = arrayAreaCoincide[i].id;
+            coordenadaTemp[10] = arrayAreaCoincide[i].angulo;
+            coordenadaTemp[11] = arrayAreaCoincide[i].comentario;
           break;
         }
       }
@@ -424,7 +430,7 @@ $(document).ready(function(){
 
 
 //actualizarBD(600,150, 9, '2018-03-20 02:53:00');
-function actualizarBD (x, y, ancho,largo, date1,date2,time1,time2, categoria, cliente ,id, date, typeUpdate){
+function actualizarBD (x, y, ancho,largo, date1,date2,time1,time2, categoria, cliente ,id, comentario, date, typeUpdate){
  // Convertir a objeto
  var data = {};
 
@@ -439,6 +445,7 @@ function actualizarBD (x, y, ancho,largo, date1,date2,time1,time2, categoria, cl
  data.time1 = time1;
  data.time2 = time2;
  data.categoria = categoria;
+ data.comentario = comentario;
  data.cliente = cliente;
  data.typeUpdate = typeUpdate;
  var url = 'actualizar.php';   //este es el PHP al que se llama por AJAX
