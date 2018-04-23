@@ -8,9 +8,8 @@ $data = array();
 $query = "SELECT * FROM area_ocupada";
 
 
-$statement = $pdo->prepare($query);
+$statement = $pdo->query($query);
 
-$statement->execute();
 
 $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 //var_dump($result);
