@@ -2,14 +2,10 @@
 
 
 $dbHost = 'localhost';
-$dbName = 'ptw_park';
-$dbUser = 'root';
+$dbName = '';
+$dbUser = '';
 $dbPass = '';
 
-/* $dbHost = 'localhost';
-$dbName = 'planner';
-$dbUser = 'ptwplanner';
-$dbPass = 'ptwpark1298'; */
 
 try {
     $pdo = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUser, $dbPass);
