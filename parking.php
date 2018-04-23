@@ -21,7 +21,7 @@
   <script type="text/javascript" src="./js/zoom_mapa.js"></script>
   <script type="text/javascript" src="./js/eliminar_elemento.js"></script>
   <script type="text/javascript" src="./js/cerrar_sesion.js"></script>
-  <script type="text/javascript" src="./js/mover_elemento.js"></script>
+  <!-- <script type="text/javascript" src="./js/mover_elemento.js"></script> -->
   <script type="text/javascript" src="./js/efect_mousemove.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
 
@@ -88,6 +88,27 @@
         <canvas class="canvas1" id="canvas2" >
         </canvas>
     </div>
+
+    <!-- comienza -->
+      <style type="text/css">
+      .cal{
+
+        width: 40%;
+        margin: 0 auto;
+        float: right;
+
+      }
+
+      .cal>h2{
+        margin-top: 10%;
+        /*height: 80%;*/
+      }
+    </style>
+    <div class="cal">
+      <?php include 'calendario_p.php' ?>
+    </div>
+    <!-- finaliza -->
+
   </div>
   <div class="container">
     <div class="row col-sm-12 col-md-12">
