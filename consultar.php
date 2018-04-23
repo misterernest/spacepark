@@ -4,6 +4,7 @@ error_reporting(-1);
 ini_set('display_errors', 'On');
 
 if ( isset($_POST['date']) && !empty($_POST['date']) && isset($_POST['dias']) && !empty($_POST['dias']) )  {
+	require_once 'config.php';
 	// Datos recibidos
 	$fecha = $_POST['date'];
 	$dias = $_POST['dias'];
@@ -16,7 +17,6 @@ if ( isset($_POST['date']) && !empty($_POST['date']) && isset($_POST['dias']) &&
 	$nuevafechaf = date('Y-m-d', strtotime("$fecha + $diasFinal days"));
 
 	// Conexion base de datos
-	require_once 'config.php';
 
 	// insert
     $query = "SELECT * FROM area_ocupada WHERE fecha_incial BETWEEN '$nuevafechai' AND '$nuevafechaf' OR fecha_final BETWEEN '$nuevafechai' AND '$nuevafechaf '";
