@@ -2,8 +2,7 @@
 
 //update.php
 
-$connect = new PDO('mysql:host=localhost;dbname=spaceparking', 'root', '');
-
+include('../config.php');
 if (isset($_POST['id']) && !empty($_POST['id']) &&
 	isset($_POST['categoria']) && !empty($_POST['categoria']) &&
 	isset($_POST['cliente']) && !empty($_POST['cliente']) &&
@@ -12,11 +11,11 @@ if (isset($_POST['id']) && !empty($_POST['id']) &&
 
 
  $query = "
- UPDATE reserva 
- SET categoria=:categoria, cliente=:cliente, comentario=:comentario 
+ UPDATE reserva
+ SET categoria=:categoria, cliente=:cliente, comentario=:comentario
  WHERE id_reserva=:id
  ";
- $statement = $connect->prepare($query);
+ $statement = $pdo->prepare($query);
  $statement->execute(
   array(
    ':categoria'  => $_POST['categoria'],
