@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
  <head>
-  <title>Reservaciones</title>
+  <title>Calendario de Reservas</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css" /> -->
   <script src="../js/jquery-3.2.1.min.js"></script>
@@ -142,7 +142,7 @@
  </head>
  <body>
   <br />
-  <h2 align="center"><a href="parking.php">Calendario para Reservaciones</a></h2>
+  <h2 align="center"><a href="parking.php">Calendario de Reservas</a></h2>
   <br />
   <div class="container">
    <div id="calendar"></div>

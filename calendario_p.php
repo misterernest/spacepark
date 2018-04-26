@@ -7,7 +7,7 @@
  <head>
   <meta charset="utf-8">
 
-  <title>Reservaciones</title>
+  <title>Calendario de Reservas</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -154,7 +154,7 @@
  </head>
  <body>
   <br />
-  <h2 align="center"><a href="calendar.php" target="_blank">Calendario para Reservaciones</a></h2>
+  <h2 align="center"><a href="calendar.php" target="_blank">Calendario de Reservas</a></h2>
   <br />
   <div class="container">
    <div id="calendar"></div>
