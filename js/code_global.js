@@ -134,7 +134,7 @@ let zoom = false;
     $('#canvas2').attr("height", zoom_height);
     $('#canvas3').attr("width", zoom_width);
     $('#canvas3').attr("height", zoom_height);
-    cargarDiv();
+    //cargarDiv();
     /* zonasMuertas(areaDisponible1, context1);
     zonasMuertas(areaDisponible2, context1); */
   });

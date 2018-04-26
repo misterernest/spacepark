@@ -10,6 +10,8 @@ Funcion que pinta los cuadros
      sizeY = (mts2 - 2),
      cliente=""
    ){
+     context.translate(0, 0);
+     let size = 0;
      if(context){
        context.lineWidth = 0.5;
        context.strokeStyle = "#00f";
@@ -26,14 +28,28 @@ Funcion que pinta los cuadros
          sizeX,
          sizeY
        );
+       if (sizeX >= sizeY) {
+         size = sizeY;
+       } else{
+         size = sizeX;
+       }
+       context.font="normal small-caps bold " + size + "px arial";
+       let anchuraTexto = context.measureText(cliente).width;
+
+       while( anchuraTexto > sizeX-5 ){
+					// reducimos el tamaño del texto con 1 px
+  				size--;
+  				context.font = "normal small-caps bold " + size + "px arial";
+  				anchuraTexto = context.measureText(cliente).width;
+				}
        context.textAlign="center";
-       context.font="bold 1rem";
-       context.fillStyle = "black";
+       context.fillStyle = "white";
+       context.textAlign="center";
+       context.textBaseline = "top";
        context.fillText(
          cliente,
-         coordenada[0]+sizeX/2,
-         coordenada[1]+sizeY/2,
-         sizeX
+         coordenada[0]+sizeX*0.5,
+         coordenada[1]+sizeY*0.1
        );
      }
    }
@@ -229,6 +245,6 @@ function public DIBUJA LA LINEA DEL PERIMETRO PERMITIDO
  }
 
 /*function que carga la barra de rango de fecha*/
- function cargarDiv(){
-   $('#container-range').load("carga_range.php");
- }
+ // function cargarDiv(){
+ //   $('#container-range').load("carga_range.php");
+ // }

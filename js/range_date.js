@@ -19,21 +19,21 @@ $(document).ready(function(){
     $("#fecha_caja").val(`${mesText} ${fechaSeleccionada.getDate()}, ${fechaSeleccionada.getFullYear()}`);
     recorreConsulta(respuestaConsulta, context3, canvas3);
   });
-  $("#fecha_caja").click(function(){
-    $("#fecha_range").remove();
-    // location.reload()
-    context3.clearRect(0, 0, canvas3.width, canvas3.width);
-    cargarDiv();
-    let fechaActual = new Date();
-    fechaSeleccionada = fechaActual;
-    mesText = mesNumtext(fechaSeleccionada.getMonth() + 1);
-    $("#fecha_caja").val(`${mesText} ${fechaSeleccionada.getDate()}, ${fechaSeleccionada.getFullYear()}`);
-    recorreConsulta(respuestaConsulta, context3, canvas3);
-  });
+  // $("#fecha_caja").click(function(){
+  //   $("#fecha_range").remove();
+  //   // location.reload()
+  //   context3.clearRect(0, 0, canvas3.width, canvas3.width);
+  //   cargarDiv();
+  //   let fechaActual = new Date();
+  //   fechaSeleccionada = fechaActual;
+  //   mesText = mesNumtext(fechaSeleccionada.getMonth() + 1);
+  //   $("#fecha_caja").val(`${mesText} ${fechaSeleccionada.getDate()}, ${fechaSeleccionada.getFullYear()}`);
+  //   recorreConsulta(respuestaConsulta, context3, canvas3);
+  // });
 
-  function cargarDiv(){
-    $("#container-range").load("carga_range.php");
-  }
+  // function cargarDiv(){
+  //   $("#container-range").load("carga_range.php");
+  // }
   $("#fecha_range").focus(function(){
     $(document).keydown(function(e) {
       if (e.keyCode == "39") {
