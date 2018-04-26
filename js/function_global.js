@@ -10,7 +10,6 @@ Funcion que pinta los cuadros
      sizeY = (mts2 - 2),
      cliente=""
    ){
-     context.translate(0, 0);
      let size = 0;
      if(context){
        context.lineWidth = 0.5;
@@ -29,32 +28,38 @@ Funcion que pinta los cuadros
          sizeY
        );
        if (sizeX >= sizeY) {
-         size = sizeY;
+         size = Math.round(sizeX);
+         sizeHeight = sizeX;
        } else{
-         size = sizeX;
+         size = Math.round(sizeY);
+         sizeHeight = sizeY;
        }
+       sizeWidth = size;
        context.font="normal small-caps bold " + size + "px arial";
        let anchuraTexto = context.measureText(cliente).width;
-
-       while( anchuraTexto > sizeX-5 ){
+       console.log(cliente);
+       console.log(sizeWidth);
+       console.log(sizeHeight);
+       console.log(size);
+       while( anchuraTexto > sizeWidth-10 ){
 					// reducimos el tamaño del texto con 1 px
   				size--;
   				context.font = "normal small-caps bold " + size + "px arial";
   				anchuraTexto = context.measureText(cliente).width;
 				}
-       context.textAlign="center";
-       context.fillStyle = "white";
-       context.textAlign="center";
-       context.textBaseline = "top";
-       context.fillText(
-         cliente,
-         coordenada[0]+sizeX*0.5,
-         coordenada[1]+sizeY*0.1
-       );
-     }
-   }
+        console.log(size);
+        context.textAlign="center";
+        context.fillStyle = "white";
+        context.textAlign="center";
+        context.textBaseline = "top";
+        context.fillText(
+          cliente,
+          coordenada[0]+sizeX*0.5,
+          coordenada[1]+sizeY*0.1
 
-
+        );
+      }
+    }
 
 /* Pinta un area ocupada */
 function pintaAreaOcupada(objConsulta, context){

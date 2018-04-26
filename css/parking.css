@@ -102,11 +102,15 @@ body{
   top:10px;
 }
 .btn-lupa1{
-  right:310px;
+  right:370px;
   top:10px;
 }
 .btn-lupa2{
-  right:190px;
+  right:250px;
+  top:10px;
+}
+.btn-rollback{
+  right:310px;
   top:10px;
 }
 .btn-gant{
