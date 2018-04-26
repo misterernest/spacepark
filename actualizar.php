@@ -76,7 +76,7 @@ if (isset($_POST['id']) && !empty($_POST['id']) &&
 
 		if ($valido) {
 			// comienza proceso del cache
-			$this->contraquery2.= "DELETE FROM `area_ocupada` WHERE coordenada_x= '$xPost' AND coordenada_y '$yPost' AND fecha_incial =  'date1";
+			$contraquery2.= "DELETE FROM `area_ocupada` WHERE coordenada_x= '$xPost' AND coordenada_y '$yPost' AND fecha_incial =  'date1";
 			// termina proceso cache Insert
 
 			//insert
@@ -99,7 +99,7 @@ if (isset($_POST['id']) && !empty($_POST['id']) &&
 			$resulti = $prepared->execute();
 			$prepared = null;
 			//comienza proceso de Update cache
-			cache($id);
+			cache($id, $contraquery2);
 			//termina proceso de cache
 
 			// update anterior reserva
@@ -116,7 +116,7 @@ if (isset($_POST['id']) && !empty($_POST['id']) &&
 
 		}else{
 			//comienza proceso de Update cache
-			cache($id);
+			cache($id, $contraquery2);
 			//termina proceso de cache
 
 			$queryu = "UPDATE area_ocupada
@@ -134,7 +134,7 @@ if (isset($_POST['id']) && !empty($_POST['id']) &&
 		}
 	} else {
 		//comienza proceso de Update cache
-		cache($id);
+		cache($id, $contraquery2);
 		//termina proceso de cache
 
 		$queryu = "UPDATE area_ocupada
@@ -159,7 +159,8 @@ if (isset($_POST['id']) && !empty($_POST['id']) &&
 	//echo json_encode($_POST);
 	echo 0;
 }
-function cache($id){
+
+function cache($id, $contraquery2){
 	// comienza proceso del cache
 	require_once 'config.php';
 	$pdo = new Conexion();
@@ -179,7 +180,7 @@ function cache($id){
 	$categoria=$rslt['categoria'];
 	$cliente=$rslt['cliente'];
 
-	$this->contraquery2 = "UPDATE `reserva` SET
+	$contraquery2.= "UPDATE `reserva` SET
 	  coordenada_x= $x, 
 	  coordenada_y= $y, 
 	  ancho_x= $ancho, 
