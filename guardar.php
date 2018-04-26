@@ -45,6 +45,14 @@ if (
   $comentario = $_POST['comentario'];
 	// Conexion base de datos
 	require_once 'config.php';
+
+  // comienza proceso del cache
+      $contraquery= "DELETE FROM `area_ocupada` WHERE coordenada_x = '$x' AND coordenada_y = '$y' ";
+      $sql="INSERT INTO cache VALUES (NULL, '$contraquery')";
+      $prepared = $pdo->prepare($sql);
+      $resultado = $prepared->execute();
+  // termina proceso cache Insert
+
 	// insert
   $query = "INSERT INTO area_ocupada
   (
