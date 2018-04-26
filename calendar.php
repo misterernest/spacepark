@@ -142,7 +142,7 @@
  </head>
  <body>
   <br />
-  <h2 align="center"><a href="parking.php">Calendario para Reservaciones</a></h2>
+  <h2 align="center"><a href="parking.php">Calendario de Reservas</a></h2>
   <br />
   <div class="container">
    <div id="calendar"></div>
