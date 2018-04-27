@@ -111,6 +111,7 @@ let zoom = false;
   let seleccionBtnEliminar = false;
   let seleccionBtnMover = false;
   let seleccionBtnActualizaFecha = false;
+  let seleccionBtnAtras = false;
 
 
 

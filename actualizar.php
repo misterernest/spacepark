@@ -76,7 +76,7 @@ if (isset($_POST['id']) && !empty($_POST['id']) &&
 
 		if ($valido) {
 			// comienza proceso del cache
-			$contraquery2.= "DELETE FROM `area_ocupada` WHERE coordenada_x= '$xPost' AND coordenada_y '$yPost' AND fecha_incial =  'date1";
+			$contraquery2.= "DELETE FROM `area_ocupada` WHERE coordenada_x= '$xPost' AND coordenada_y '$yPost' AND fecha_incial =  'date1'";
 			// termina proceso cache Insert
 
 			//insert
@@ -163,7 +163,7 @@ if (isset($_POST['id']) && !empty($_POST['id']) &&
 function cache($id, $contraquery2){
 	// comienza proceso del cache
 	require_once 'config.php';
-	$pdo = new Conexion();
+	//$pdo = new Conexion();
 	$contraquery= "SELECT * FROM `reserva` WHERE id_reserva=$id;";
 
 	$prepared = $pdo->prepare($contraquery);
@@ -185,10 +185,11 @@ function cache($id, $contraquery2){
 	  coordenada_y= $y, 
 	  ancho_x= $ancho, 
 	  largo_y= $largo, 
-	  fecha_incial= $fecha_incial, 
-	  fecha_final= $fecha_final, 
-	  categoria= $categoria, 
-	  cliente= $cliente)";
+	  fecha_incial= '$fecha_incial', 
+	  fecha_final= '$fecha_final', 
+	  categoria= '$categoria', 
+	  cliente= '$cliente'
+	  WHERE id='$id';";
 	 
 	$contraquery3= "INSERT INTO `cache`VALUES (NULL, '$contraquery2');";
 
