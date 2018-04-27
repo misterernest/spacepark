@@ -134,6 +134,30 @@ var url = 'consultar.php';   //este es el PHP al que se llama por AJAX
     });
 }
 
+/* Consulta la base de datos si hay cache */
+function consultarCache(){
+
+// asina valor a la variable
+var data = 'consulta' ;
+console.log(data);
+var url = 'consultasCache.php';   //este es el PHP al que se llama por AJAX
+
+    $.ajax({
+        method: 'POST',
+        url: url,
+        data: data,   //acá están todos los parámetros (valores a enviar) del POST
+        success: function(response){
+          if (response > 0) {
+            console.log('aqui algo paso');
+            console.log(response);
+            $('#atras').removeClass("btn-inactivo");
+          }
+        },
+   dataType:"json"
+    });
+}
+
+
 /*
 mesNumtext convierte el numero del mes en texto
 */

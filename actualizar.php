@@ -175,7 +175,7 @@ function cache($id, $contraquery2){
 	$y=$rslt['coordenada_y'];
 	$ancho=$rslt['ancho_x'];
 	$largo=$rslt['largo_y'];
-	$fecha_incial=$rslt['fecha_inicial'];
+	$fecha_incial=$rslt['fecha_incial'];
 	$fecha_final= $rslt['fecha_final'];
 	$categoria=$rslt['categoria'];
 	$cliente=$rslt['cliente'];
@@ -191,7 +191,7 @@ function cache($id, $contraquery2){
 	  cliente= '$cliente'
 	  WHERE id='$id';";
 	 
-	$contraquery3= "INSERT INTO `cache`VALUES (NULL, '$contraquery2');";
+	$contraquery3= "INSERT INTO `cache` VALUES (NULL, '$contraquery2');";
 
 	$prepared = $pdo->prepare($contraquery3);
 	$rslt = $prepared->execute();

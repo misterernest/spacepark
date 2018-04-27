@@ -127,6 +127,8 @@ let zoom = false;
 
     consultarBaseDatos(`${yyyy}-${mm}-${dd}`, 180, context3, canvas3);
     $('#fecha_caja').val(`${mesText} ${dd}, ${yyyy}`);
+    // se verifica si hay cache en la bd;
+    consultarCache();
     /* Set inicial en el tamaño para el manejo del zoom */
     $('#img-park').attr("width", zoom_width);
     $('#canvas1').attr("width", zoom_width);
