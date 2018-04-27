@@ -37,17 +37,17 @@ Funcion que pinta los cuadros
        sizeWidth = size;
        context.font="normal small-caps bold " + size + "px arial";
        let anchuraTexto = context.measureText(cliente).width;
-       console.log(cliente);
-       console.log(sizeWidth);
-       console.log(sizeHeight);
-       console.log(size);
+       // console.log(cliente);
+       // console.log(sizeWidth);
+       // console.log(sizeHeight);
+       // console.log(size);
        while( anchuraTexto > sizeWidth-10 ){
 					// reducimos el tamaño del texto con 1 px
   				size--;
   				context.font = "normal small-caps bold " + size + "px arial";
   				anchuraTexto = context.measureText(cliente).width;
 				}
-        console.log(size);
+        // console.log(size);
         context.textAlign="center";
         context.fillStyle = "white";
         context.textAlign="center";
@@ -138,22 +138,25 @@ var url = 'consultar.php';   //este es el PHP al que se llama por AJAX
 function consultarCache(){
 
 // asina valor a la variable
-var data = 'consulta' ;
-console.log(data);
-var url = 'consultasCache.php';   //este es el PHP al que se llama por AJAX
+  var data = {};
+  data.consulta = 'consulta';
+  console.log(data);
+  var url = 'consultasCache.php';   //este es el PHP al que se llama por AJAX
 
     $.ajax({
-        method: 'POST',
+        method:'POST',
         url: url,
         data: data,   //acá están todos los parámetros (valores a enviar) del POST
         success: function(response){
-          if (response > 0) {
+          if (response) {
             console.log('aqui algo paso');
             console.log(response);
             $('#atras').removeClass("btn-inactivo");
           }
         },
-   dataType:"json"
+        error: function( jqXHR, textStatus, errorThrown ) {
+           console.log(response);
+        }
     });
 }
 

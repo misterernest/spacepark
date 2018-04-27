@@ -17,10 +17,10 @@ $(document).ready(function(){
 	        },
 	   dataType:"json"
 	    });
-    }
+    });
 
 
-    function traerCache(){
+    // function traerCache(){
 
-    }
+    // }
 });//fin documento ready
